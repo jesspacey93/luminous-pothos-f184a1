@@ -29,7 +29,7 @@ export default async (req)=>{
         {type:'input_text',text:'Edit this exact clothing/accessory photo into a clean ecommerce catalogue cutout. Preserve the real item as faithfully as possible: same garment type, silhouette, proportions, colour, pattern, fabric appearance, hardware, seams and visible details. Remove the person, hanger, room, floor and all background clutter. Show only one complete item, centred, front-facing or in the most faithful view available, with natural product lighting. Do not redesign, embellish, invent branding or change the item. Transparent background. No text, labels, props, shadows extending beyond the item, or extra objects.'},
         {type:'input_image',image_url:image,detail:'high'}
       ]}],
-      tools:[{type:'image_generation',action:'edit',model:'gpt-image-2',background:'transparent',input_fidelity:'high',output_format:'png',size:'1024x1536',quality:'medium'}],
+      tools:[{type:'image_generation',action:'edit',model:'gpt-image-2',background:'transparent',output_format:'png',size:'1024x1536',quality:'medium'}],
       tool_choice:{type:'image_generation'}
     };
     const er=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers,body:JSON.stringify(editPayload)});
