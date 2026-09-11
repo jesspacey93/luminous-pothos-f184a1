@@ -252,7 +252,36 @@ async function liveShop(mode){
     }
   }catch(e){out.innerHTML=`<div class="shopError"><b>Couldn’t search yet</b><p>${esc(e.message)}</p>${String(e.message).includes('not connected')?'<small>Once the shopping API key is added in Netlify, this screen switches to real live results automatically.</small>':''}</div>`}finally{btn.disabled=false;btn.textContent=old;out.scrollIntoView({behavior:'smooth',block:'start'})}
 }
-function styleShopProduct(p){let own=buildOutfit();let ownBoard=outfitBoard(own);modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLE WITH MY DROBE</div><span style="width:40px"></span></div><div class="shopHeroProduct">${p.image?`<img src="${esc(p.image)}" alt="" referrerpolicy="no-referrer">`:''}<div><div class="eyebrow">${esc(p.store||'ONLINE')}</div><h2>${esc(p.title)}</h2><b>${esc(p.price||'Check price')}</b></div></div><div class="eyebrow" style="margin-top:20px">I'D WEAR IT WITH</div>${ownBoard}<div class="why"><b>Why it earns its place</b><br>This gives you a new focal piece while the rest of the look comes from clothes already in your Drobe. Check the retailer page for the final colour, size and availability before buying.</div><a class="primary wide shopOpenLink" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Open at retailer →</a>`;modal.classList.add('open');modal.scrollTop=0}
+function inferShopCategory(p){
+  const t=(p.title||'').toLowerCase();
+  if(/dress|jumpsuit|playsuit|romper/.test(t))return 'One-piece';
+  if(/jean|trouser|pants|skirt|shorts|legging/.test(t))return 'Bottom';
+  if(/boot|shoe|trainer|sneaker|loafer|heel|sandal|pump|flat|mule/.test(t))return 'Shoes';
+  if(/bag|tote|clutch|crossbody|handbag|shoulder bag/.test(t))return 'Bag';
+  if(/blazer|jacket|coat|trench|cardigan/.test(t))return 'Outerwear';
+  if(/earring|necklace|bracelet|ring|belt|scarf|clip|sunglass/.test(t))return 'Accessory';
+  return 'Top';
+}
+function buildAroundShopProduct(p){
+  const cat=inferShopCategory(p),used=[],pcs=[];
+  const add=c=>{let x=pickOne(c,used);if(x){pcs.push(x);used.push(x.id)}};
+  if(cat==='One-piece'){add('Shoes');add('Bag');add('Accessory')}
+  else if(cat==='Top'){add('Bottom');add('Shoes');add('Bag');add('Accessory')}
+  else if(cat==='Bottom'){add('Top');add('Shoes');add('Bag');add('Accessory')}
+  else if(cat==='Shoes'){add('Top');add('Bottom');add('Bag');add('Accessory')}
+  else if(cat==='Bag'){add('Top');add('Bottom');add('Shoes');add('Accessory')}
+  else if(cat==='Outerwear'){add('Top');add('Bottom');add('Shoes');add('Bag');add('Accessory')}
+  else {add('Top');add('Bottom');add('Shoes');add('Bag')}
+  return {cat,pcs};
+}
+function styleShopProduct(p){
+  const built=buildAroundShopProduct(p),cat=built.cat;
+  const external={id:'shop-preview',brand:p.store||'Online',name:p.title||'New piece',cat:cat,img:p.image||'',custom:true};
+  const boardPieces=[external,...built.pcs];
+  const ownedNames=built.pcs.slice(0,4).map(x=>x.name).join(', ');
+  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLE WITH MY DROBE</div><span style="width:40px"></span></div><div class="shopHeroProduct">${p.image?`<img src="${esc(p.image)}" alt="" referrerpolicy="no-referrer">`:''}<div><div class="eyebrow">NEW PIECE · ${esc(p.store||'ONLINE')}</div><h2>${esc(p.title)}</h2><b>${esc(p.price||'Check price')}</b></div></div><div class="eyebrow" style="margin-top:20px">ONE WAY I'D WEAR IT</div>${outfitBoard(boardPieces)}<div class="why"><b>Already in your Drobe</b><br>${esc(ownedNames||'Your existing pieces complete the look.')}</div><div class="why"><b>Why it works</b><br>The new ${esc(cat.toLowerCase())} is the only piece you’d need to buy. I’ve built the rest from clothes you already own, so you can judge whether it genuinely earns a place in your wardrobe.</div><div class="actions"><button onclick='styleShopProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Try another outfit</button><button onclick="modal.classList.remove('open')">Back to results</button></div><a class="primary wide shopOpenLink" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Open at retailer →</a>`;
+  modal.classList.add('open');modal.scrollTop=0;
+}
 function openColourAnalysis(){modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">MY COLOUR ANALYSIS</div></div><h1>Find my colours</h1><p class="wardrobeIntro">One clear selfie. A much easier time choosing colours.</p><div class="colourUpload"><img id="selfiePreview" class="selfiePreview"><label for="colourSelfie"><b>Upload a selfie</b><small style="display:block;margin-top:6px;color:var(--muted)">Natural daylight · no filter · face clearly visible</small></label><input id="colourSelfie" type="file" accept="image/*" onchange="previewColourSelfie(event)"></div><div class="featureNote">Photo-based colour analysis can vary with lighting, camera processing and makeup, so Daily Drobe will present this as a best-fit seasonal guide rather than a definitive professional draping result.</div><button id="analyseColourBtn" class="primary wide" onclick="showColourPrototype()">Analyse my colours ✦</button><div id="colourResult"></div>`;modal.classList.add('open')}
 function previewColourSelfie(e){let f=e.target.files&&e.target.files[0];if(!f)return;let img=document.getElementById('selfiePreview');img.src=URL.createObjectURL(f);img.style.display='block'}
 function showColourPrototype(){let has=document.getElementById('colourSelfie').files.length;if(!has){toastMsg('Upload a selfie first');return}document.getElementById('colourResult').innerHTML=`<div class="card" style="margin-top:18px"><div class="eyebrow">ANALYSIS PREVIEW</div><h2 style="margin:6px 0">Your season will appear here</h2><p style="font-size:11px;line-height:1.5;color:var(--muted)">The production version will analyse visible warmth, depth and contrast, then return your best-fit season, neutrals, colours and metals.</p><div class="paletteDots"><i style="background:#3c2a20"></i><i style="background:#806342"></i><i style="background:#b5a178"></i><i style="background:#5c6445"></i><i style="background:#7a3932"></i></div><button class="secondary wide" onclick="toastMsg(\'Your palette will feed into Style Me and Shop\')">Use my palette in Daily Drobe</button></div>`}
