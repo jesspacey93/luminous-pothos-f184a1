@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Jessica’s Wardrobe",
-  "short_name": "Wardrobe",
+  "name": "Daily Drobe",
+  "short_name": "Daily Drobe",
   "description": "Jessica’s personal wardrobe and styling app",
   "start_url": "./",
   "scope": "./",
