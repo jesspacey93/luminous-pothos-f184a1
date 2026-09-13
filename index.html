@@ -20,6 +20,50 @@
 /* V6.4 Styling Brain */
 .styleBrainNote{background:#eee7de;border-radius:16px;padding:12px 13px;font-size:10px;line-height:1.5;color:#625d56;margin:12px 0}.styleBrainNote b{color:var(--ink)}
 .brainLoading{text-align:center;padding:28px 10px}.brainLoading .aiSpinner{margin:8px auto 14px}.brainSignals{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}.brainSignal{border:1px solid var(--line);border-radius:99px;padding:6px 8px;font-size:9px;background:#fff}.brainWhy{font-size:12px;line-height:1.6;background:#f5f0e9;padding:14px;border-radius:14px;color:#514c45}.brainWhy b{display:block;color:var(--ink);margin-bottom:4px}.brainPieceList{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.brainPiece{background:#f3eee7;border-radius:13px;padding:6px;text-align:center;min-width:0}.brainPiece img{width:100%;height:112px;object-fit:contain}.brainPiece small{display:block;font-size:8px;line-height:1.25;margin-top:4px;overflow:hidden}.brainFeedback{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.brainFeedback button{border:1px solid var(--line);background:white;border-radius:12px;padding:10px;font-size:10px}.inspoBox{background:white;border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.inspoBox textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0}.inspoSaved{font-size:10px;color:var(--muted);line-height:1.5}.trendBadge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#78695d;margin:8px 0}
+
+/* V6.4.1 — Pinterest-style editorial outfit composition */
+.pinterestOutfit{
+  position:relative;
+  width:100%;
+  max-width:430px;
+  height:540px;
+  margin:22px auto 18px;
+  overflow:hidden;
+  background:#f7f3ec;
+  border-radius:2px;
+}
+.pinPiece{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.pinPiece img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 12px rgba(44,36,29,.08));
+}
+.pinPiece .pinLabel{display:none}
+.pinPiece.pin-top{left:5%;top:3%;width:49%;height:44%;transform:rotate(-1.5deg)}
+.pinPiece.pin-bottom{right:0%;top:25%;width:57%;height:58%;transform:rotate(1.2deg)}
+.pinPiece.pin-onepiece{left:14%;top:4%;width:60%;height:72%;transform:rotate(-1deg)}
+.pinPiece.pin-outerwear{left:-5%;top:3%;width:48%;height:51%;transform:rotate(-2deg)}
+.pinPiece.pin-shoes{left:3%;bottom:0%;width:43%;height:25%;transform:rotate(-5deg)}
+.pinPiece.pin-bag{right:3%;bottom:3%;width:32%;height:27%;transform:rotate(4deg)}
+.pinPiece.pin-accessory{right:4%;top:5%;width:23%;height:19%;transform:rotate(5deg)}
+.pinPiece.pin-extra{left:39%;bottom:2%;width:26%;height:22%;transform:rotate(2deg)}
+.pinPiece.pin-external:after{
+  content:"NEW PIECE";
+  position:absolute;left:50%;bottom:2px;transform:translateX(-50%);
+  white-space:nowrap;font-size:8px;letter-spacing:1.5px;background:#fff;padding:5px 7px;
+}
+.pinCaption{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 16px;
+  margin:0 4px 20px;padding-top:2px;border-top:1px solid rgba(60,50,42,.14);
+}
+.pinCaption span{font-size:9px;line-height:1.35;color:var(--muted);padding-top:8px}
+@media(max-width:390px){.pinterestOutfit{height:500px}}
 </style></head><body><main class="app">
 <section id="home" class="page active"><div class="eyebrow">Your personal stylist</div><div class="head"><h1>Good afternoon,<br>Jessica</h1><button class="iconbtn" onclick="go('profile')">⚙</button></div><div class="hero"><div class="eyebrow" style="color:#bdb6ad">STYLE ME</div><h2>Your clothes.<br>Better outfits.</h2><p>Outfits made from the clothes you already own.</p><button class="primary" onclick="go('style')">Create my look →</button></div><div class="quick"><button onclick="go('wardrobe')"><b>⌑</b><small>My Wardrobe</small></button><button onclick="go('style')"><b>✦</b><small>Style Me</small></button><button onclick="go('outfits')"><b>♡</b><small>Saved Looks</small></button><button onclick="go('calendar')"><b>□</b><small>What I Wore</small></button><button onclick="showGaps()"><b>＋</b><small>Wardrobe Gaps</small></button><button onclick="go('shop')"><b>⌕</b><small>Find Something</small></button></div><div class="sectionHead"><h2 class="serif">Wardrobe at a glance</h2><button class="linkbtn" onclick="go('wardrobe')">See all</button></div><div class="statgrid"><div class="stat"><b id="homeCount">13</b><small>PIECES</small></div><div class="stat"><b id="savedCount">0</b><small>SAVED LOOKS</small></div><div class="stat"><b id="wornCount">0</b><small>LOGGED DAYS</small></div></div></section>
 <section id="wardrobe" class="page"><div class="eyebrow">DAILY DROBE</div><div class="head"><h1 style="margin-bottom:6px">My Wardrobe</h1><button class="iconbtn" onclick="openAdd()" aria-label="Add an item">＋</button></div><p class="wardrobeIntro">Everything you own, in one place.</p><div class="wardrobeTools"><input id="search" class="search" placeholder="Search your wardrobe…" oninput="renderWardrobe()"><button class="filterBtn" onclick="openFilters()" aria-label="Filter wardrobe">☷</button></div><div id="chips" class="chips"></div><div class="wardrobeSummary"><div><strong id="wardrobeTitle">All pieces</strong><br><small id="pieceCount"></small></div><button class="linkbtn" onclick="toggleFavourites()" id="favToggle">♡ Favourites</button></div><div id="grid" class="grid"></div><div class="wardrobeInsights"><div class="eyebrow">WARDROBE NOTES</div><h2 style="margin:6px 0 4px">Your wardrobe, understood.</h2><div id="wardrobeInsights"></div></div></section>
@@ -261,7 +305,21 @@ function buildSmartFallback(forceId){
   ['Shoes','Bag','Accessory'].forEach(c=>{if(!pcs.some(i=>i.cat===c)){let x=choose(c);if(x)pcs.push(x)}});if(['Cool','Cold'].includes(prefs.weather)||['Work','Dinner','Drinks','Date night'].includes(prefs.occasion)){let x=choose('Outerwear');if(x)pcs.push(x)}return pcs;
 }
 function outfitWhySmart(pcs){const top=pcs.find(i=>i.cat==='Top'),bottom=pcs.find(i=>i.cat==='Bottom'),hero=pcs.find(i=>garmentSignals(i).statement);if(top&&bottom){const a=garmentSignals(top),b=garmentSignals(bottom);return `${top.name} ${b.volume&&a.fitted?'keeps the upper half clean against the volume of '+bottom.name.toLowerCase():'works with '+bottom.name.toLowerCase()+' as the foundation'}. ${hero&&hero!==top&&hero!==bottom?hero.name+' gives the outfit one deliberate focal point. ':''}The remaining pieces are kept supportive so the look feels considered rather than over-styled.`}return outfitWhy(pcs)}
-function safeOutfitBoard(pcs){return `<div class="brainPieceList">${pcs.map(i=>`<div class="brainPiece">${itemImg(i)}<small>${i.name}</small></div>`).join('')}</div>`}
+function pinterestOutfitBoard(pcs,externalId){
+  const cls=i=>{
+    if(i.id===externalId)return 'pin-external '+('pin-'+String(i.cat||'extra').toLowerCase().replace(/[^a-z]/g,''));
+    if(i.cat==='Top')return 'pin-top';
+    if(i.cat==='Bottom')return 'pin-bottom';
+    if(i.cat==='One-piece'||i.cat==='Dress')return 'pin-onepiece';
+    if(i.cat==='Outerwear')return 'pin-outerwear';
+    if(i.cat==='Shoes')return 'pin-shoes';
+    if(i.cat==='Bag')return 'pin-bag';
+    if(i.cat==='Accessory')return 'pin-accessory';
+    return 'pin-extra';
+  };
+  return `<div class="pinterestOutfit">${pcs.map(i=>`<div class="pinPiece ${cls(i)}">${itemImg(i)}</div>`).join('')}</div><div class="pinCaption">${pcs.map(i=>`<span>${i.name}</span>`).join('')}</div>`;
+}
+function safeOutfitBoard(pcs){return pinterestOutfitBoard(pcs)}
 function showBrainLook(pcs,data){
   const title=prefs.occasion+' · '+prefs.mood;const why=data.why||outfitWhySmart(pcs);const signals=(data.signals||['Proportion-led','Personalised','Current']).slice(0,5);
   modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">YOUR LOOK</div><span style="width:40px"></span></div><div class="resultTitle" style="margin-top:18px">${prefs.occasion}</div><div class="resultSub">${prefs.mood} · ${prefs.trend}</div>${data.trendNote?`<div class="trendBadge">${data.trendNote}</div>`:''}${safeOutfitBoard(pcs)}<div class="brainSignals">${signals.map(x=>`<span class="brainSignal">${x}</span>`).join('')}</div><div class="brainWhy"><b>Why I’d put you in this</b>${why}</div><div class="actions"><button onclick="styleFeedbackEvent('wear');wearGeneratedToday();modal.classList.remove('open')">Wear this</button><button onclick="styleFeedbackEvent('reject');generateLook()">Try another</button><button onclick="styleFeedbackEvent('save');saveGeneratedLook()">♡ Save</button></div><div class="brainFeedback"><button onclick="styleFeedbackEvent('reject');generateLook()">Not feeling it</button><button onclick="styleFeedbackEvent('swap');generateLook()">Give me a different direction</button></div><button class="secondary wide" style="margin-top:10px" onclick="modal.classList.remove('open')">Change the brief</button>`;
@@ -372,7 +430,7 @@ function styleShopProduct(p){
   const external={id:'shop-preview',brand:p.store||'Online',name:p.title||'New piece',cat:cat,img:p.image||'',custom:true};
   const boardPieces=[external,...built.pcs];
   const ownedNames=built.pcs.slice(0,4).map(x=>x.name).join(', ');
-  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLE WITH MY DROBE</div><span style="width:40px"></span></div><div class="shopHeroProduct">${p.image?`<img src="${esc(p.image)}" alt="" referrerpolicy="no-referrer">`:''}<div><div class="eyebrow">NEW PIECE · ${esc(p.store||'ONLINE')}</div><h2>${esc(p.title)}</h2><b>${esc(p.price||'Check price')}</b></div></div><div class="eyebrow" style="margin-top:20px">ONE WAY I'D WEAR IT</div>${outfitBoard(boardPieces)}<div class="why"><b>Already in your Drobe</b><br>${esc(ownedNames||'Your existing pieces complete the look.')}</div><div class="why"><b>Why it works</b><br>The new ${esc(cat.toLowerCase())} is the only piece you’d need to buy. I’ve built the rest from clothes you already own, so you can judge whether it genuinely earns a place in your wardrobe.</div><div class="actions"><button onclick='styleShopProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Try another outfit</button><button onclick="modal.classList.remove('open')">Back to results</button></div><a class="primary wide shopOpenLink" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Open at retailer →</a>`;
+  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLE WITH MY DROBE</div><span style="width:40px"></span></div><div class="shopHeroProduct">${p.image?`<img src="${esc(p.image)}" alt="" referrerpolicy="no-referrer">`:''}<div><div class="eyebrow">NEW PIECE · ${esc(p.store||'ONLINE')}</div><h2>${esc(p.title)}</h2><b>${esc(p.price||'Check price')}</b></div></div><div class="eyebrow" style="margin-top:20px">ONE WAY I'D WEAR IT</div>${pinterestOutfitBoard(boardPieces,'shop-preview')}<div class="why"><b>Already in your Drobe</b><br>${esc(ownedNames||'Your existing pieces complete the look.')}</div><div class="why"><b>Why it works</b><br>The new ${esc(cat.toLowerCase())} is the only piece you’d need to buy. I’ve built the rest from clothes you already own, so you can judge whether it genuinely earns a place in your wardrobe.</div><div class="actions"><button onclick='styleShopProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Try another outfit</button><button onclick="modal.classList.remove('open')">Back to results</button></div><a class="primary wide shopOpenLink" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Open at retailer →</a>`;
   modal.classList.add('open');modal.scrollTop=0;
 }
 function openColourAnalysis(){modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">MY COLOUR ANALYSIS</div></div><h1>Find my colours</h1><p class="wardrobeIntro">One clear selfie. A much easier time choosing colours.</p><div class="colourUpload"><img id="selfiePreview" class="selfiePreview"><label for="colourSelfie"><b>Upload a selfie</b><small style="display:block;margin-top:6px;color:var(--muted)">Natural daylight · no filter · face clearly visible</small></label><input id="colourSelfie" type="file" accept="image/*" onchange="previewColourSelfie(event)"></div><div class="featureNote">Photo-based colour analysis can vary with lighting, camera processing and makeup, so Daily Drobe will present this as a best-fit seasonal guide rather than a definitive professional draping result.</div><button id="analyseColourBtn" class="primary wide" onclick="showColourPrototype()">Analyse my colours ✦</button><div id="colourResult"></div>`;modal.classList.add('open')}
