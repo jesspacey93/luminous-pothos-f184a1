@@ -257,11 +257,32 @@ function garmentSignals(i){
   const txt=[i.name,i.fit,i.pattern,i.style,i.material,i.subcategory,i.length,i.sleeve,i.neckline].flat().join(' ').toLowerCase();
   return {fitted:/fitted|tailored|wrap|defined/.test(txt),volume:/oversized|relaxed|wide|barrel|balloon|batwing|boxy/.test(txt),statement:!/plain/.test(String(i.pattern||'').toLowerCase())||/fur|gold|fair isle|argyle|tartan|check|sculptural|suede/.test(txt),warm:/brown|cream|oatmeal|taupe|beige|gold|khaki|burgundy/.test((i.colour+' '+i.secondaryColour).toLowerCase()),light:/white|cream|ivory|oatmeal|beige/.test((i.colour||'').toLowerCase())};
 }
+function stylingContext(){
+  const n=(notes?.value||'').toLowerCase();
+  const occ=String(prefs.occasion||'').toLowerCase();
+  const atHome=/work(ing)? from home|wfh|at home|home office/.test(n);
+  const destinationDinner=/sushi\s*samba|restaurant|fine dining|rooftop|special dinner|nice dinner/.test(n);
+  const evening=/dinner|drinks|date night/.test(occ)||destinationDinner;
+  return {n,occ,atHome,destinationDinner,evening};
+}
+function isShortBottom(i){
+  const t=[i.name,i.subcategory,i.length].flat().join(' ').toLowerCase();
+  return i.cat==='Bottom'&&/short|mini/.test(t);
+}
+function isFurPiece(i){
+  return /fur|faux-fur/.test([i.name,i.material,i.subcategory,i.style].flat().join(' ').toLowerCase());
+}
 function hardEligible(i){
-  const n=(notes?.value||'').toLowerCase(), season=(i.season||[]).join(' ').toLowerCase();
+  const c=stylingContext(),n=c.n, season=(i.season||[]).join(' ').toLowerCase(), warmth=String(i.warmth||'').toLowerCase();
   if((/period|bloated/.test(n))&&i.cat==='Bottom'&&garmentSignals(i).light)return false;
-  if(prefs.weather==='Warm'&&/warm/.test((i.warmth||'').toLowerCase())&&i.cat!=='Accessory'&&i.cat!=='Bag')return false;
+  // At-home briefs are a different outfit system: no destination-only pieces.
+  if(c.atHome&&['Bag','Outerwear','Shoes'].includes(i.cat))return false;
+  // A named/special evening restaurant should not surface obviously casual summer shorts.
+  if(c.destinationDinner&&isShortBottom(i))return false;
+  if(prefs.weather==='Warm'&&/warm/.test(warmth)&&i.cat!=='Accessory'&&i.cat!=='Bag')return false;
   if(prefs.weather==='Cold'&&i.cat==='Top'&&String(i.sleeve||'').toLowerCase()==='sleeveless')return false;
+  // Prevent multiple fur-heavy pieces entering the high-priority pool for a restaurant brief.
+  if(c.destinationDinner&&isFurPiece(i)&&i.cat==='Top')return false;
   return true;
 }
 function personalScore(i){
@@ -302,7 +323,10 @@ function buildSmartFallback(forceId){
   const pool=candidateWardrobe(forceId), forced=forceId?items.find(i=>i.id===forceId):null;let pcs=forced?[forced]:[];
   const choose=c=>pool.filter(i=>i.cat===c&&!pcs.some(p=>p.id===i.id)).sort((a,b)=>personalScore(b)-personalScore(a))[0];
   if(!pcs.some(i=>['Dress','One-piece'].includes(i.cat))){if(!pcs.some(i=>i.cat==='Top')){let x=choose('Top');if(x)pcs.push(x)}if(!pcs.some(i=>i.cat==='Bottom')){let x=choose('Bottom');if(x)pcs.push(x)}}
-  ['Shoes','Bag','Accessory'].forEach(c=>{if(!pcs.some(i=>i.cat===c)){let x=choose(c);if(x)pcs.push(x)}});if(['Cool','Cold'].includes(prefs.weather)||['Work','Dinner','Drinks','Date night'].includes(prefs.occasion)){let x=choose('Outerwear');if(x)pcs.push(x)}return pcs;
+  const ctx=stylingContext();
+  (ctx.atHome?['Accessory']:['Shoes','Bag','Accessory']).forEach(c=>{if(!pcs.some(i=>i.cat===c)){let x=choose(c);if(x)pcs.push(x)}});
+  if(!ctx.atHome&&(['Cool','Cold'].includes(prefs.weather)||['Dinner','Drinks','Date night'].includes(prefs.occasion))){let x=choose('Outerwear');if(x)pcs.push(x)}
+  return pcs;
 }
 function outfitWhySmart(pcs){const top=pcs.find(i=>i.cat==='Top'),bottom=pcs.find(i=>i.cat==='Bottom'),hero=pcs.find(i=>garmentSignals(i).statement);if(top&&bottom){const a=garmentSignals(top),b=garmentSignals(bottom);return `${top.name} ${b.volume&&a.fitted?'keeps the upper half clean against the volume of '+bottom.name.toLowerCase():'works with '+bottom.name.toLowerCase()+' as the foundation'}. ${hero&&hero!==top&&hero!==bottom?hero.name+' gives the outfit one deliberate focal point. ':''}The remaining pieces are kept supportive so the look feels considered rather than over-styled.`}return outfitWhy(pcs)}
 function pinterestOutfitBoard(pcs,externalId){
