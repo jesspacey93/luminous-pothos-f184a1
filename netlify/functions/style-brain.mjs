@@ -22,7 +22,7 @@ DO NOT pick one item from each category independently. Build the outfit as a sin
 
 DECISION ORDER:
 1. Interpret the user's natural-language brief literally. What is she physically doing, where is she going, and what would she realistically need?
-2. Establish the appropriate dress code and season/weather.
+2. Establish the appropriate dress code and season/weather. The brief may contain multiple selected vibes joined together (for example Feminine + Sexy or Cool + Chic); blend them into one coherent direction rather than choosing only one.
 3. Choose the strongest TOP+BOTTOM pair (or one-piece) first. This base must work on its own.
 4. Check silhouette/proportion. Jessica strongly favours a defined/compact top with wide/barrel/full bottoms. With slim bottoms, controlled volume or tailoring above works. Avoid loose/voluminous top + wide/voluminous bottom unless there is a very specific deliberate reason.
 5. Check colour as an entire palette. Her strongest wardrobe language is polished neutrals: chocolate, cream, taupe, black, grey, denim, khaki, burgundy and gold. Tonal dressing or one controlled contrast is preferred to several unrelated colours.
