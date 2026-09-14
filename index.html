@@ -21,25 +21,32 @@
 .styleBrainNote{background:#eee7de;border-radius:16px;padding:12px 13px;font-size:10px;line-height:1.5;color:#625d56;margin:12px 0}.styleBrainNote b{color:var(--ink)}
 .brainLoading{text-align:center;padding:28px 10px}.brainLoading .aiSpinner{margin:8px auto 14px}.brainSignals{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}.brainSignal{border:1px solid var(--line);border-radius:99px;padding:6px 8px;font-size:9px;background:#fff}.brainWhy{font-size:12px;line-height:1.6;background:#f5f0e9;padding:14px;border-radius:14px;color:#514c45}.brainWhy b{display:block;color:var(--ink);margin-bottom:4px}.brainPieceList{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.brainPiece{background:#f3eee7;border-radius:13px;padding:6px;text-align:center;min-width:0}.brainPiece img{width:100%;height:112px;object-fit:contain}.brainPiece small{display:block;font-size:8px;line-height:1.25;margin-top:4px;overflow:hidden}.brainFeedback{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.brainFeedback button{border:1px solid var(--line);background:white;border-radius:12px;padding:10px;font-size:10px}.inspoBox{background:white;border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.inspoBox textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0}.inspoSaved{font-size:10px;color:var(--muted);line-height:1.5}.trendBadge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#78695d;margin:8px 0}
 
-/* V6.4.3 — true editorial flat-lay outfit composition */
+/* V6.5.2 — layered Pinterest composition; clothes always remain the hero */
 .pinterestOutfit{
   position:relative;width:100%;max-width:430px;height:570px;
-  margin:22px auto 12px;overflow:hidden;background:#f5f1e9;border-radius:0;
+  margin:22px auto 12px;overflow:hidden;background:#faf8f4;border-radius:0;
 }
-.pinPiece{position:absolute;display:flex;align-items:center;justify-content:center;transform:none!important}
+.pinPiece{position:absolute;display:flex;align-items:center;justify-content:center}
 .pinPiece img{width:100%;height:100%;object-fit:contain;filter:none}
 .pinPiece .pinLabel{display:none}
-/* Main clothes are laid out as if photographed from directly overhead: separated,
-   straight and fully visible. Smaller finishing pieces sit around them. */
-.pinPiece.pin-top{left:4%;top:5%;width:43%;height:37%}
-.pinPiece.pin-bottom{right:3%;top:8%;width:48%;height:64%}
-.pinPiece.pin-onepiece{left:16%;top:4%;width:58%;height:68%}
-.pinPiece.pin-outerwear{left:1%;top:2%;width:46%;height:48%;z-index:0}
-.pinPiece.pin-outerwear + .pinPiece.pin-top{z-index:1}
-.pinPiece.pin-shoes{left:4%;bottom:2%;width:42%;height:25%}
-.pinPiece.pin-bag{right:4%;bottom:4%;width:29%;height:23%}
-.pinPiece.pin-accessory{left:48%;bottom:6%;width:17%;height:15%}
-.pinPiece.pin-extra{left:42%;bottom:3%;width:24%;height:20%}
+
+/* Clothing anchor layers */
+.pinPiece.pin-outerwear{left:-3%;top:1%;width:54%;height:55%;z-index:1}
+.pinPiece.pin-bottom{left:37%;top:10%;width:48%;height:70%;z-index:2}
+.pinPiece.pin-onepiece{left:20%;top:4%;width:56%;height:72%;z-index:2}
+.pinPiece.pin-top{left:24%;top:8%;width:43%;height:39%;z-index:4}
+
+/* Finishing pieces: deliberately smaller than clothing */
+.pinPiece.pin-shoes{left:2%;bottom:0;width:37%;height:27%;z-index:6;transform:rotate(-4deg)}
+.pinPiece.pin-bag{right:1%;bottom:5%;width:31%;height:25%;z-index:7;transform:rotate(2deg)}
+.pinPiece.pin-accessory{right:13%;top:35%;width:14%;height:13%;z-index:8}
+.pinPiece.pin-accessory:nth-of-type(even){right:auto;left:6%;top:46%;width:13%;height:12%;transform:rotate(-7deg)}
+.pinPiece.pin-fragrance{right:3%;top:2%;width:17%;height:22%;z-index:8;transform:rotate(2deg)}
+.pinPiece.pin-extra{left:7%;bottom:27%;width:18%;height:16%;z-index:8}
+
+/* Never allow finishing pieces to visually swallow the outfit */
+.pinPiece.pin-fragrance img,.pinPiece.pin-accessory img,.pinPiece.pin-bag img,.pinPiece.pin-shoes img{max-width:100%;max-height:100%}
+
 .pinPiece.pin-external:after{
   content:"NEW PIECE";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
   white-space:nowrap;font-size:8px;letter-spacing:1.5px;background:#fff;padding:5px 7px
@@ -119,7 +126,7 @@ const seed=[
 ,{id:3007,seedKey:'hm-gold-crescent-claw-clip',brand:'H&M',name:'Gold Crescent Claw Hair Clip',cat:'Accessory',subcategory:'Hair accessory',colour:'Gold',secondaryColour:'None',pattern:'Plain',material:'Metal',fit:'One size',detail:'Crescent claw design',season:['Spring','Summer','Autumn','Winter'],occasion:['Casual','Work','Weekend','Dinner','Day out','Smart casual'],style:['Minimal','Clean girl','Elegant','Classic'],warmth:'None',status:'In wardrobe',favourite:false,timesWorn:0,img:'b810f03c-6e1b-439b-a802-2f3a1b143c5f.png'}
 ,{id:3008,seedKey:'gold-chunky-hoop-earrings',brand:'Unknown',name:'Gold Chunky Hoop Earrings',cat:'Accessory',subcategory:'Earrings',colour:'Gold',secondaryColour:'None',pattern:'Plain',material:'Metal',fit:'One size',detail:'Chunky hoop',season:['Spring','Summer','Autumn','Winter'],occasion:['Work','Dinner','Drinks','Date night','Weekend','Day out','Smart casual'],style:['Minimal','Classic','Clean girl','Polished'],warmth:'None',status:'In wardrobe',favourite:false,timesWorn:0,img:'63B276B5-175F-4D4F-95DF-E9ABDF13BFB7.png'}
 ,{id:3009,seedKey:'calvin-klein-euphoria-edp',brand:'Calvin Klein',name:'Euphoria Eau de Parfum',cat:'Fragrance',subcategory:'Eau de Parfum',colour:'Plum / Silver',secondaryColour:'None',pattern:'None',material:'Fragrance',fit:'N/A',detail:'Signature fragrance',season:['Autumn','Winter','Spring'],occasion:['Dinner','Drinks','Date night','Evening','Event'],style:['Sensual','Elegant','Classic'],warmth:'N/A',status:'In wardrobe',favourite:false,timesWorn:0,img:'FFC2ADE9-C774-402D-B3E8-20F8B79BDE59.png'}
-,{id:3010,seedKey:'penhaligons-halfeti-edp',brand:"Penhaligon's",name:'Halfeti Eau de Parfum',cat:'Fragrance',subcategory:'Eau de Parfum',colour:'Clear / Gold',secondaryColour:'Black / Red',pattern:'None',material:'Fragrance',fit:'N/A',detail:'Signature fragrance',season:['Autumn','Winter','Spring'],occasion:['Dinner','Drinks','Date night','Evening','Event'],style:['Quiet luxury','Elegant','Rich','Classic'],warmth:'N/A',status:'In wardrobe',favourite:false,timesWorn:0,img:'0BC782AA-09D6-4547-BBAB-8F8FFECBCF07.jpeg'}
+,{id:3010,seedKey:'penhaligons-halfeti-edp',brand:"Penhaligon's",name:'Halfeti Eau de Parfum',cat:'Fragrance',subcategory:'Eau de Parfum',colour:'Clear / Gold',secondaryColour:'Black / Red',pattern:'None',material:'Fragrance',fit:'N/A',detail:'Signature fragrance',season:['Autumn','Winter','Spring'],occasion:['Dinner','Drinks','Date night','Evening','Event'],style:['Quiet luxury','Elegant','Rich','Classic'],warmth:'N/A',status:'In wardrobe',favourite:false,timesWorn:0,img:'0BC782AA-09D6-4547-BBAB-8F8FFECBCF07-transparent.png'}
 ,{id:3011,seedKey:'coach-signature-hobo-shoulder-bag',brand:'Coach',name:'Signature Hobo Shoulder Bag',cat:'Bag',subcategory:'Shoulder bag',colour:'Dark Brown / Black',secondaryColour:'Gold',pattern:'Signature monogram',material:'Coated canvas / Leather trim',fit:'Shoulder',detail:'Gold-tone hardware / Hobo silhouette',season:['Spring','Summer','Autumn','Winter'],occasion:['Work','Dinner','Drinks','Weekend','Day out','Smart casual','Travel'],style:['Classic','Quiet luxury','Polished','Everyday'],warmth:'N/A',status:'In wardrobe',favourite:false,timesWorn:0,img:'E9E9FD14-55E5-44A1-9174-9E0B4CE550FF.jpeg'},
 {"id":4056,"seedKey":"j-m-cream-wide-leg-jeans-56","brand":"J&M","name":"Cream Wide-Leg Jeans","cat":"Bottom","subcategory":"Jeans","colour":"Cream","secondaryColour":"None","pattern":"Plain","material":"Denim","fit":"Wide leg","length":"Full length","sleeve":"N/A","neckline":"N/A","season":["Spring","Summer","Autumn"],"occasion":["Casual","Weekend","Day out","Smart casual"],"style":["Minimal","Casual","Contemporary","Scandi"],"warmth":"Medium","status":"In wardrobe","favourite":false,"timesWorn":0,"img":"73e33f12-9719-4bee-8360-44348727e380.png"},
 {"id":4057,"seedKey":"autograph-m-s-mid-wash-wide-leg-jeans-57","brand":"Autograph M&S","name":"Mid-Wash Wide-Leg Jeans","cat":"Bottom","subcategory":"Jeans","colour":"Mid Blue","secondaryColour":"None","pattern":"Plain / Washed denim","material":"Denim","fit":"Wide leg","length":"Full length","sleeve":"N/A","neckline":"N/A","season":["Spring","Autumn","Winter"],"occasion":["Casual","Weekend","Day out","Smart casual"],"style":["Casual","Contemporary","Classic","Minimal"],"warmth":"Medium","status":"In wardrobe","favourite":false,"timesWorn":0,"img":"9cdcfa64-d3a8-4b03-bc66-e0a3ec7c32ea.png"},
@@ -182,7 +189,7 @@ let items=seed.map(si=>{
 const seedMatches=i=>seed.some(si=>(si.seedKey&&i.seedKey===si.seedKey)||(si.img&&i.img===si.img)||(norm(i.name)===norm(si.name)&&norm(i.brand)===norm(si.brand)));
 existingItems.filter(i=>!seedMatches(i)&&(Number(i.id)>1000000000000||String(i.img||'').startsWith('data:image/'))).forEach(i=>items.push(i));
 localStorage.setItem('jw_items',JSON.stringify(items));
-localStorage.setItem('jw_catalogue_version','6.5');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
+localStorage.setItem('jw_catalogue_version','6.5.2');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
 const looks=[];
 const outfitSlots={
   required:['TopOrDress','BottomIfNoDress','Shoes','Bag','Accessory'],
