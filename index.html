@@ -46,10 +46,16 @@
 }
 .pinCaption{display:none}
 @media(max-width:390px){.pinterestOutfit{height:530px}}
+
+/* V6.5 — complete-look stylist */
+.stylingTips{margin:14px 0 0;padding:16px 17px;background:#f4f0e9;border:1px solid rgba(34,31,28,.09);font-size:12px;line-height:1.55}
+.stylingTips b{display:block;font-family:Georgia,serif;font-size:16px;margin-bottom:8px;font-weight:500}
+.stylingTips ul{margin:0;padding-left:17px}.stylingTips li+li{margin-top:5px}
+.lookPieceCount{margin-top:8px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 </style></head><body><main class="app">
 <section id="home" class="page active"><div class="eyebrow">Your personal stylist</div><div class="head"><h1>Good afternoon,<br>Jessica</h1><button class="iconbtn" onclick="go('profile')">⚙</button></div><div class="hero"><div class="eyebrow" style="color:#bdb6ad">STYLE ME</div><h2>Your clothes.<br>Better outfits.</h2><p>Outfits made from the clothes you already own.</p><button class="primary" onclick="go('style')">Create my look →</button></div><div class="quick"><button onclick="go('wardrobe')"><b>⌑</b><small>My Wardrobe</small></button><button onclick="go('style')"><b>✦</b><small>Style Me</small></button><button onclick="go('outfits')"><b>♡</b><small>Saved Looks</small></button><button onclick="go('calendar')"><b>□</b><small>What I Wore</small></button><button onclick="showGaps()"><b>＋</b><small>Wardrobe Gaps</small></button><button onclick="go('shop')"><b>⌕</b><small>Find Something</small></button></div><div class="sectionHead"><h2 class="serif">Wardrobe at a glance</h2><button class="linkbtn" onclick="go('wardrobe')">See all</button></div><div class="statgrid"><div class="stat"><b id="homeCount">13</b><small>PIECES</small></div><div class="stat"><b id="savedCount">0</b><small>SAVED LOOKS</small></div><div class="stat"><b id="wornCount">0</b><small>LOGGED DAYS</small></div></div></section>
 <section id="wardrobe" class="page"><div class="eyebrow">DAILY DROBE</div><div class="head"><h1 style="margin-bottom:6px">My Wardrobe</h1><button class="iconbtn" onclick="openAdd()" aria-label="Add an item">＋</button></div><p class="wardrobeIntro">Everything you own, in one place.</p><div class="wardrobeTools"><input id="search" class="search" placeholder="Search your wardrobe…" oninput="renderWardrobe()"><button class="filterBtn" onclick="openFilters()" aria-label="Filter wardrobe">☷</button></div><div id="chips" class="chips"></div><div class="wardrobeSummary"><div><strong id="wardrobeTitle">All pieces</strong><br><small id="pieceCount"></small></div><button class="linkbtn" onclick="toggleFavourites()" id="favToggle">♡ Favourites</button></div><div id="grid" class="grid"></div><div class="wardrobeInsights"><div class="eyebrow">WARDROBE NOTES</div><h2 style="margin:6px 0 4px">Your wardrobe, understood.</h2><div id="wardrobeInsights"></div></div></section>
-<section id="style" class="page"><div class="eyebrow">YOUR PERSONAL STYLIST</div><h1>Style Me</h1><p style="font-size:13px;color:var(--muted);line-height:1.5">Tell me what you're dressing for. The Styling Brain weighs proportion, colour, your taste, wear history and what feels current — then deliberately builds the look.</p><div class="styleBrainNote"><b>STYLING BRAIN</b><br>Not random picks. Your wardrobe is filtered, ranked and then styled as a complete outfit.</div><div class="field"><label>What are you doing?</label><div id="occasions" class="choices"></div></div><div class="field"><label>How do you want to look? <span style="font-weight:400;color:var(--muted)">Choose up to 3</span></label><div id="moods" class="choices"></div><div id="vibeSummary" class="tiny" style="margin-top:9px;color:var(--muted)"></div></div><div class="field"><label>Weather?</label><div id="weather" class="choices"></div></div><div class="field"><label>How current?</label><div id="trendLevel" class="choices"></div></div><div class="field"><label>Anything else?</label><textarea id="notes" class="search" placeholder="e.g. use my barrel jeans, no heels, I'm bloated, something I haven't worn recently…"></textarea></div><button class="primary wide" onclick="generateLook()">Style me ✦</button><div id="result"></div></section>
+<section id="style" class="page"><div class="eyebrow">YOUR PERSONAL STYLIST</div><h1>Style Me</h1><p style="font-size:13px;color:var(--muted);line-height:1.5">Tell me what you're dressing for. The Styling Brain weighs proportion, colour, your taste, wear history and what feels current — then deliberately builds the look.</p><div class="styleBrainNote"><b>STYLING BRAIN</b><br>No fixed formula. I build the whole look for what you’re actually doing — clothes, layers, shoes, bag, jewellery, useful extras and fragrance — then leave out anything that doesn’t earn its place.</div><div class="field"><label>What are you doing?</label><div id="occasions" class="choices"></div></div><div class="field"><label>How do you want to look? <span style="font-weight:400;color:var(--muted)">Choose up to 3</span></label><div id="moods" class="choices"></div><div id="vibeSummary" class="tiny" style="margin-top:9px;color:var(--muted)"></div></div><div class="field"><label>Weather?</label><div id="weather" class="choices"></div></div><div class="field"><label>How current?</label><div id="trendLevel" class="choices"></div></div><div class="field"><label>Anything else?</label><textarea id="notes" class="search" placeholder="e.g. use my barrel jeans, no heels, I'm bloated, something I haven't worn recently…"></textarea></div><button class="primary wide" onclick="generateLook()">Style me ✦</button><div id="result"></div></section>
 <section id="outfits" class="page"><div class="eyebrow">YOUR LOOKBOOK</div><h1>Looks</h1><div class="lookTabs"><button id="savedTab" class="lookTab active" onclick="setLooksTab('saved')">SAVED</button><button id="wornTab" class="lookTab" onclick="setLooksTab('worn')">WORN</button></div><div id="looksSavedPanel"><div id="savedLooks" class="savedGrid"></div></div><div id="looksWornPanel" style="display:none"><div id="wornSummary"></div><div id="wornLooks"></div><div id="wearInsights" class="insightBox"></div></div></section>
 <section id="calendar" class="page"><div class="eyebrow">WHAT I WORE</div><div class="monthHead"><button onclick="changeMonth(-1)">‹</button><h1 id="calendarTitle" style="font-size:30px;margin:5px 0"></h1><button onclick="changeMonth(1)">›</button></div><div id="calendarStats" class="diarySummary"></div><div class="calendarWrap"><div class="calendar" id="cal"></div></div><div class="sectionHead"><h2>Recently worn</h2></div><div id="recentWorn"></div></section>
 <section id="shop" class="page"><div class="eyebrow">FIND SOMETHING NEW</div><h1>Shop</h1><p class="wardrobeIntro">Real pieces from shops online, then styled against what you already own.</p><div class="shopMode"><button id="shopOutfitMode" class="sel" onclick="setShopMode('outfit')"><b>Find an outfit</b><small>Shop a whole look for your plans.</small></button><button id="shopItemMode" onclick="setShopMode('item')"><b>Find an item</b><small>Tell me exactly what you're after.</small></button></div><div id="shopOutfitForm" class="form"><label>What’s it for?</label><input id="shopOccasion" placeholder="Dinner in London, wedding, holiday…"><label>Total budget</label><input id="shopBudget" placeholder="e.g. £150"><label>Where should I look?</label><input id="shopStores" placeholder="Zara, ASOS, H&M… or leave blank"><label>Anything else?</label><textarea id="shopNotes" placeholder="No heels, neutral colours, nothing too fitted…"></textarea><button id="shopOutfitBtn" class="primary wide" onclick="liveShop('outfit')">Search live shops →</button></div><div id="shopItemForm" class="form" style="display:none"><label>What are you looking for?</label><input id="shopQuery" placeholder="e.g. chocolate brown suede jacket"><label>Budget</label><input id="itemBudget" placeholder="e.g. under £100"><label>Shops</label><input id="itemStores" placeholder="Any shop"><label>Size</label><input id="itemSize" placeholder="e.g. 6–8"><button id="shopItemBtn" class="primary wide" onclick="liveShop('item')">Search live shops →</button></div><div class="featureNote"><b>Live shopping beta.</b> Prices and availability come from current shopping search results and can change on the retailer's site. Always check the retailer page before buying.</div><div id="shopResults"></div></section><section id="profile" class="page"><div class="eyebrow">YOUR STYLE DNA</div><h1>Profile</h1><div class="profileHero"><div class="avatar">JP</div><h2 style="margin-bottom:3px">Jessica</h2><div class="eyebrow">NEUTRAL · POLISHED · CONTEMPORARY</div></div><button class="profileFeature" onclick="openColourAnalysis()"><b>✦ My Colour Analysis</b><small>Upload a selfie to discover your seasonal palette and best colours.</small></button><button class="profileFeature" onclick="go('outfits')"><b>♡ My Looks</b><small>Saved outfits and what you wore.</small></button><button class="profileFeature" onclick="openStyleInspiration()"><b>⌁ My Style Inspiration</b><small>Tell Daily Drobe what you save on Pinterest and the outfit energy you want more of.</small></button><div class="card"><div class="row"><span>Palette</span><b>Black · Cream · Taupe · Brown</b></div><div class="row"><span>Best rise</span><b>High rise</b></div><div class="row"><span>Go-to silhouette</span><b>Defined waist + long leg</b></div><div class="row"><span>Favourite styling</span><b>Relaxed tailoring</b></div></div><h2>What works</h2><div><span class="tag">Wide-leg trousers</span><span class="tag">Straight-leg denim</span><span class="tag">Fitted tops</span><span class="tag">Wrap necklines</span><span class="tag">Oversized blazers</span><span class="tag">Pointed boots</span></div><h2>Styling rules</h2><div class="card" style="font-size:12px;line-height:1.55">Keep one deliberate point of structure. When the bottom is wide, keep the top compact or defined. With slim bottoms, add volume or tailoring up top. Prioritise proportion over rigid “body shape” rules.</div></section>
@@ -176,7 +182,7 @@ let items=seed.map(si=>{
 const seedMatches=i=>seed.some(si=>(si.seedKey&&i.seedKey===si.seedKey)||(si.img&&i.img===si.img)||(norm(i.name)===norm(si.name)&&norm(i.brand)===norm(si.brand)));
 existingItems.filter(i=>!seedMatches(i)&&(Number(i.id)>1000000000000||String(i.img||'').startsWith('data:image/'))).forEach(i=>items.push(i));
 localStorage.setItem('jw_items',JSON.stringify(items));
-localStorage.setItem('jw_catalogue_version','6.3');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
+localStorage.setItem('jw_catalogue_version','6.5');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
 const looks=[];
 const outfitSlots={
   required:['TopOrDress','BottomIfNoDress','Shoes','Bag','Accessory'],
@@ -342,45 +348,91 @@ function personalScore(i){
   const words=n.split(/\W+/).filter(x=>x.length>3);if(words.some(w=>(i.name+' '+i.colour+' '+i.brand).toLowerCase().includes(w)))sc+=12;
   return sc;
 }
+function practicalRole(i){
+  const t=itemText(i);
+  if(i.cat==='Shoes'){
+    if(/heel|stiletto|court|pump/.test(t))return 'heels';
+    if(/trainer|sneaker/.test(t))return 'trainers';
+    if(/boot/.test(t))return 'boots';
+    if(/loafer|flat|ballet|sandal/.test(t))return 'flats';
+  }
+  if(i.cat==='Bag'){
+    if(/clutch|mini|small|evening/.test(t))return 'small-bag';
+    if(/tote|shopper|work|large/.test(t))return 'large-bag';
+    if(/crossbody|shoulder/.test(t))return 'hands-free-bag';
+  }
+  if(i.cat==='Accessory'){
+    if(/earring|hoop|stud/.test(t))return 'earrings';
+    if(/necklace|chain|pendant/.test(t))return 'necklace';
+    if(/bracelet|bangle/.test(t))return 'bracelet';
+    if(/ring/.test(t))return 'ring';
+    if(/sunglass/.test(t))return 'sunglasses';
+    if(/scarf/.test(t))return 'scarf';
+    if(/hat|cap|beanie/.test(t))return 'hat';
+    if(/belt/.test(t))return 'belt';
+    if(/tight|hosiery/.test(t))return 'tights';
+  }
+  return '';
+}
 function candidateWardrobe(forceId){
   const forced=forceId?items.find(i=>i.id===forceId):null;
-  const cats=['Top','Bottom','Dress','One-piece','Shoes','Bag','Accessory','Outerwear'];let out=[];
-  cats.forEach(c=>{out.push(...items.filter(i=>i.cat===c&&hardEligible(i)).sort((a,b)=>personalScore(b)-personalScore(a)).slice(0,c==='Top'||c==='Bottom'?10:7))});
+  const limits={Top:16,Bottom:12,Dress:10,'One-piece':10,Shoes:12,Bag:12,Accessory:24,Outerwear:12,Fragrance:16};let out=[];
+  Object.keys(limits).forEach(c=>{out.push(...items.filter(i=>i.cat===c&&hardEligible(i)).sort((a,b)=>personalScore(b)-personalScore(a)).slice(0,limits[c]))});
   if(forced&&!out.some(i=>i.id===forced.id))out.unshift(forced);
   return out;
 }
+function fallbackAllowed(i,ctx){
+  const role=practicalRole(i),t=itemText(i);
+  if(ctx.atHome&&['Shoes','Bag','Outerwear'].includes(i.cat))return false;
+  if(/walking the dogs|dog walk/.test(ctx.occ+' '+ctx.n)&&role==='heels')return false;
+  if(/walking the dogs|dog walk/.test(ctx.occ+' '+ctx.n)&&role==='small-bag')return false;
+  if(/date night|dinner|drinks|night out|event|wedding/.test(ctx.occ)&&role==='large-bag')return false;
+  if(/no heels/.test(ctx.n)&&role==='heels')return false;
+  if(/walking|comfortable shoes/.test(ctx.n)&&role==='heels')return false;
+  return true;
+}
 async function generateLook(forceId){
-  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLING BRAIN</div><span style="width:40px"></span></div><div class="brainLoading"><div class="aiSpinner"></div><h2>Putting the outfit together…</h2><p class="tiny">Checking proportion, colour, occasion, your preferences and current styling signals.</p></div>`;modal.classList.add('open');
+  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">STYLING BRAIN</div><span style="width:40px"></span></div><div class="brainLoading"><div class="aiSpinner"></div><h2>Styling the whole look…</h2><p class="tiny">Starting with the silhouette, then deciding what genuinely earns a place — layers, shoes, bag, jewellery, useful extras and fragrance.</p></div>`;modal.classList.add('open');
   const candidates=candidateWardrobe(forceId);
   try{
-    const res=await fetch('/.netlify/functions/style-brain',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prefs,notes:notes?.value||'',forceId:forceId||null,inspiration:styleInspiration,candidates:candidates.map(i=>({id:i.id,name:i.name,brand:i.brand,cat:i.cat,subcategory:i.subcategory,colour:i.colour,secondaryColour:i.secondaryColour,pattern:i.pattern,material:i.material,fit:i.fit,length:i.length,sleeve:i.sleeve,neckline:i.neckline,season:i.season,occasion:i.occasion,style:i.style,warmth:i.warmth,favourite:i.favourite,timesWorn:i.timesWorn||0,score:personalScore(i),signals:garmentSignals(i)})),feedback:styleFeedback.slice(-30)})});
+    const res=await fetch('/.netlify/functions/style-brain',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prefs,notes:notes?.value||'',forceId:forceId||null,inspiration:styleInspiration,candidates:candidates.map(i=>({id:i.id,name:i.name,brand:i.brand,cat:i.cat,subcategory:i.subcategory,colour:i.colour,secondaryColour:i.secondaryColour,pattern:i.pattern,material:i.material,fit:i.fit,length:i.length,sleeve:i.sleeve,neckline:i.neckline,season:i.season,occasion:i.occasion,style:i.style,warmth:i.warmth,favourite:i.favourite,timesWorn:i.timesWorn||0,price:i.price||i.valueTier||'',valueTier:i.valueTier||'',saveForSpecial:i.saveForSpecial||false,scentFamily:i.scentFamily||'',intensity:i.intensity||'',role:practicalRole(i),score:personalScore(i)})),feedback:styleFeedback.slice(-30)})});
     const data=await res.json();if(!res.ok)throw new Error(data.error||'Stylist unavailable');
-    const pcs=(data.ids||[]).map(id=>items.find(i=>i.id===id)).filter(Boolean);
+    let pcs=(data.ids||[]).map(id=>items.find(i=>i.id===id)).filter(Boolean);
     if(!pcs.length)throw new Error('No outfit returned');
+    // Fragrance is mandatory whenever the user has fragrances catalogued.
+    if(items.some(i=>i.cat==='Fragrance')&&!pcs.some(i=>i.cat==='Fragrance')){
+      const f=candidates.filter(i=>i.cat==='Fragrance').sort((a,b)=>personalScore(b)-personalScore(a))[0];if(f)pcs.push(f)
+    }
     showBrainLook(pcs,data);
   }catch(e){
-    const pcs=buildSmartFallback(forceId);showBrainLook(pcs,{why:outfitWhySmart(pcs),signals:['Proportion-led','Your wardrobe','Smart fallback'],trendNote:'Live trend intelligence is temporarily unavailable, so I used the Styling Brain’s wardrobe rules instead.'});
+    const pcs=buildSmartFallback(forceId);showBrainLook(pcs,{why:outfitWhySmart(pcs),signals:['Context-aware','Proportion-led','Complete look'],stylingTips:defaultStylingTips(pcs),trendNote:'Live stylist intelligence is temporarily unavailable, so I used your wardrobe rules and context instead.'});
   }
 }
 function buildSmartFallback(forceId){
-  const pool=candidateWardrobe(forceId),ctx=stylingContext(),forced=forceId?items.find(i=>i.id===forceId):null;
-  const tops=pool.filter(i=>i.cat==='Top'), bottoms=pool.filter(i=>i.cat==='Bottom');
-  const ones=pool.filter(i=>['Dress','One-piece'].includes(i.cat));
-  let bases=[];
-  tops.forEach(t=>bottoms.forEach(b=>bases.push({pcs:[t,b],score:personalScore(t)+personalScore(b)+pairCompatibility(t,b)})));
-  ones.forEach(o=>bases.push({pcs:[o],score:personalScore(o)+6}));
-  if(forced)bases=bases.filter(x=>x.pcs.some(i=>i.id===forced.id)||!['Top','Bottom','Dress','One-piece'].includes(forced.cat));
-  bases.sort((a,b)=>b.score-a.score);
-  let pcs=(bases[0]?.pcs||[]).slice();
-  if(forced&&!pcs.some(i=>i.id===forced.id))pcs.unshift(forced);
-  const choose=c=>{
-    const opts=pool.filter(i=>i.cat===c&&!pcs.some(p=>p.id===i.id));
-    return opts.sort((a,b)=>(personalScore(b)+outfitCoherence([...pcs,b]))-(personalScore(a)+outfitCoherence([...pcs,a])))[0];
-  };
-  const finish=ctx.atHome?['Accessory']:['Shoes','Bag','Accessory'];
-  finish.forEach(c=>{let x=choose(c);if(x&&outfitCoherence([...pcs,x])>-20)pcs.push(x)});
-  if(!ctx.atHome&&(['Cool','Cold'].includes(prefs.weather)||ctx.evening)){let x=choose('Outerwear');if(x&&outfitCoherence([...pcs,x])>-10)pcs.push(x)}
+  const ctx=stylingContext(),pool=candidateWardrobe(forceId).filter(i=>fallbackAllowed(i,ctx)),forced=forceId?items.find(i=>i.id===forceId):null;
+  const tops=pool.filter(i=>i.cat==='Top'),bottoms=pool.filter(i=>i.cat==='Bottom'),ones=pool.filter(i=>['Dress','One-piece'].includes(i.cat));let bases=[];
+  tops.forEach(t=>bottoms.forEach(b=>bases.push({pcs:[t,b],score:personalScore(t)+personalScore(b)+pairCompatibility(t,b)})));ones.forEach(o=>bases.push({pcs:[o],score:personalScore(o)+6}));
+  if(forced)bases=bases.filter(x=>x.pcs.some(i=>i.id===forced.id)||!['Top','Bottom','Dress','One-piece'].includes(forced.cat));bases.sort((a,b)=>b.score-a.score);let pcs=(bases[0]?.pcs||[]).slice();if(forced&&!pcs.some(i=>i.id===forced.id))pcs.unshift(forced);
+  const choose=(c,role='')=>pool.filter(i=>i.cat===c&&!pcs.some(p=>p.id===i.id)&&(!role||practicalRole(i)===role)).sort((a,b)=>(personalScore(b)+outfitCoherence([...pcs,b]))-(personalScore(a)+outfitCoherence([...pcs,a])))[0];
+  // Shoes/bags are contextual, never compulsory at home.
+  if(!ctx.atHome){let sh=choose('Shoes');if(sh)pcs.push(sh);let bag=choose('Bag');if(bag)pcs.push(bag)}
+  // Outerwear only when climate/activity makes it useful.
+  if(!ctx.atHome&&(['Cool','Cold'].includes(prefs.weather)||/office|walking the dogs|dog walk|day out|shopping|errands|pub|dinner|drinks|date night|night out|event|wedding/.test(ctx.occ))){let x=choose('Outerwear');if(x&&outfitCoherence([...pcs,x])>-12)pcs.push(x)}
+  // Add jewellery intelligently: earrings first, optional necklace if it doesn't compete.
+  let ear=choose('Accessory','earrings')||choose('Accessory');if(ear)pcs.push(ear);let neck=choose('Accessory','necklace');if(neck&&!pcs.some(i=>garmentSignals(i).statement&&i.cat==='Top'))pcs.push(neck);
+  // Weather/activity extras are conditional.
+  if(prefs.weather==='Cold'){let scarf=choose('Accessory','scarf');if(scarf)pcs.push(scarf)}
+  if(prefs.weather==='Warm'&&!ctx.atHome){let sunnies=choose('Accessory','sunglasses');if(sunnies)pcs.push(sunnies)}
+  // Fragrance is the one mandatory finishing category once fragrances exist.
+  let frag=choose('Fragrance');if(frag)pcs.push(frag);
   return pcs;
+}
+function defaultStylingTips(pcs){
+  const tips=[],top=pcs.find(i=>i.cat==='Top'),bottom=pcs.find(i=>i.cat==='Bottom'),outer=pcs.find(i=>i.cat==='Outerwear');
+  if(top&&bottom&&isWideBottom(bottom))tips.push('Keep the waist visible — tuck or position the top so the volume of the bottom still feels intentional.');
+  if(outer)tips.push(`Wear the ${outer.name.toLowerCase()} open so the base silhouette still reads underneath.`);
+  if(pcs.some(i=>practicalRole(i)==='earrings'))tips.push('Let the earrings be visible: keep hair tucked behind one ear rather than adding more jewellery for the sake of it.');
+  return tips.slice(0,3);
 }
 function outfitWhySmart(pcs){const top=pcs.find(i=>i.cat==='Top'),bottom=pcs.find(i=>i.cat==='Bottom'),hero=pcs.find(i=>garmentSignals(i).statement);if(top&&bottom){const a=garmentSignals(top),b=garmentSignals(bottom);return `${top.name} ${b.volume&&a.fitted?'keeps the upper half clean against the volume of '+bottom.name.toLowerCase():'works with '+bottom.name.toLowerCase()+' as the foundation'}. ${hero&&hero!==top&&hero!==bottom?hero.name+' gives the outfit one deliberate focal point. ':''}The remaining pieces are kept supportive so the look feels considered rather than over-styled.`}return outfitWhy(pcs)}
 function pinterestOutfitBoard(pcs,externalId){
@@ -393,15 +445,16 @@ function pinterestOutfitBoard(pcs,externalId){
     if(i.cat==='Shoes')return 'pin-shoes';
     if(i.cat==='Bag')return 'pin-bag';
     if(i.cat==='Accessory')return 'pin-accessory';
+    if(i.cat==='Fragrance')return 'pin-fragrance';
     return 'pin-extra';
   };
   return `<div class="pinterestOutfit">${pcs.map(i=>`<div class="pinPiece ${cls(i)}">${itemImg(i)}</div>`).join('')}</div><div class="pinCaption">${pcs.map(i=>`<span>${i.name}</span>`).join('')}</div>`;
 }
 function safeOutfitBoard(pcs){return pinterestOutfitBoard(pcs)}
 function showBrainLook(pcs,data){
-  const title=prefs.occasion+' · '+prefs.mood;const why=data.why||outfitWhySmart(pcs);const signals=(data.signals||['Proportion-led','Personalised','Current']).slice(0,5);
-  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">YOUR LOOK</div><span style="width:40px"></span></div><div class="resultTitle" style="margin-top:18px">${prefs.occasion}</div><div class="resultSub">${prefs.mood} · ${prefs.trend}</div>${data.trendNote?`<div class="trendBadge">${data.trendNote}</div>`:''}${safeOutfitBoard(pcs)}<div class="brainSignals">${signals.map(x=>`<span class="brainSignal">${x}</span>`).join('')}</div><div class="brainWhy"><b>Why I’d put you in this</b>${why}</div><div class="actions"><button onclick="styleFeedbackEvent('wear');wearGeneratedToday();modal.classList.remove('open')">Wear this</button><button onclick="styleFeedbackEvent('reject');generateLook()">Try another</button><button onclick="styleFeedbackEvent('save');saveGeneratedLook()">♡ Save</button></div><div class="brainFeedback"><button onclick="styleFeedbackEvent('reject');generateLook()">Not feeling it</button><button onclick="styleFeedbackEvent('swap');generateLook()">Give me a different direction</button></div><button class="secondary wide" style="margin-top:10px" onclick="modal.classList.remove('open')">Change the brief</button>`;
-  window.currentGenerated={title,ids:pcs.map(i=>i.id),why};modal.classList.add('open');modal.scrollTop=0;
+  const title=prefs.occasion+' · '+prefs.mood,why=data.why||outfitWhySmart(pcs),signals=(data.signals||['Context-aware','Proportion-led','Complete look']).slice(0,5),tips=(data.stylingTips||defaultStylingTips(pcs)).slice(0,5);
+  modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">YOUR LOOK</div><span style="width:40px"></span></div><div class="resultTitle" style="margin-top:18px">${prefs.occasion}</div><div class="resultSub">${prefs.mood} · ${prefs.trend}</div><div class="lookPieceCount">${pcs.length} pieces · chosen for this look, not a fixed formula</div>${data.trendNote?`<div class="trendBadge">${data.trendNote}</div>`:''}${safeOutfitBoard(pcs)}<div class="brainSignals">${signals.map(x=>`<span class="brainSignal">${x}</span>`).join('')}</div><div class="brainWhy"><b>Why I’d put you in this</b>${why}</div>${tips.length?`<div class="stylingTips"><b>How I’d style it</b><ul>${tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}<div class="actions"><button onclick="styleFeedbackEvent('wear');wearGeneratedToday();modal.classList.remove('open')">Wear this</button><button onclick="styleFeedbackEvent('reject');generateLook()">Try another</button><button onclick="styleFeedbackEvent('save');saveGeneratedLook()">♡ Save</button></div><div class="brainFeedback"><button onclick="styleFeedbackEvent('reject');generateLook()">Not feeling it</button><button onclick="styleFeedbackEvent('swap');generateLook()">Give me a different direction</button></div><button class="secondary wide" style="margin-top:10px" onclick="modal.classList.remove('open')">Change the brief</button>`;
+  window.currentGenerated={title,ids:pcs.map(i=>i.id),why,stylingTips:tips};modal.classList.add('open');modal.scrollTop=0;
 }
 function styleFeedbackEvent(type){let l=window.currentGenerated;if(!l)return;styleFeedback.push({type,ids:l.ids,occasion:prefs.occasion,mood:prefs.mood,at:new Date().toISOString()});styleFeedback=styleFeedback.slice(-100);localStorage.setItem('dd_style_feedback',JSON.stringify(styleFeedback));}
 function openStyleInspiration(){modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">MY STYLE DNA</div><span style="width:40px"></span></div><h1 style="margin-top:18px">Style Inspiration</h1><p class="wardrobeIntro">Tell me what keeps appearing on your Pinterest boards — colours, silhouettes, specific outfit formulas, people or aesthetics. I’ll use it as inspiration, not a uniform.</p><div class="inspoBox"><label class="eyebrow">MY PINTEREST / STYLE NOTES</label><textarea id="inspoText">${styleInspiration.replace(/</g,'&lt;')}</textarea><p class="inspoSaved">Your actual Wear / Save / Not feeling it behaviour still has more weight than inspiration, so Daily Drobe learns the difference between outfits you like looking at and outfits you genuinely wear.</p></div><button class="primary wide" onclick="saveStyleInspiration()">Save my inspiration</button>`;modal.classList.add('open')}
