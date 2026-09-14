@@ -21,54 +21,45 @@
 .styleBrainNote{background:#eee7de;border-radius:16px;padding:12px 13px;font-size:10px;line-height:1.5;color:#625d56;margin:12px 0}.styleBrainNote b{color:var(--ink)}
 .brainLoading{text-align:center;padding:28px 10px}.brainLoading .aiSpinner{margin:8px auto 14px}.brainSignals{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}.brainSignal{border:1px solid var(--line);border-radius:99px;padding:6px 8px;font-size:9px;background:#fff}.brainWhy{font-size:12px;line-height:1.6;background:#f5f0e9;padding:14px;border-radius:14px;color:#514c45}.brainWhy b{display:block;color:var(--ink);margin-bottom:4px}.brainPieceList{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.brainPiece{background:#f3eee7;border-radius:13px;padding:6px;text-align:center;min-width:0}.brainPiece img{width:100%;height:112px;object-fit:contain}.brainPiece small{display:block;font-size:8px;line-height:1.25;margin-top:4px;overflow:hidden}.brainFeedback{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.brainFeedback button{border:1px solid var(--line);background:white;border-radius:12px;padding:10px;font-size:10px}.inspoBox{background:white;border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}.inspoBox textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0}.inspoSaved{font-size:10px;color:var(--muted);line-height:1.5}.trendBadge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#78695d;margin:8px 0}
 
-/* V6.8 — Pinterest Layout Engine 2.0
+/* V6.9 — Pinterest Layout Engine 2.0
    Dense, proportion-led flat lays using the exact wardrobe cut-outs. */
 .pinterestOutfit{
-  --board-h:520px;position:relative;width:calc(100% + 12px);max-width:442px;height:var(--board-h);
-  margin:10px -6px 12px;overflow:hidden;background:#fff;
+  --board-h:560px; position:relative; width:100%; height:var(--board-h);
+  margin:18px 0 16px; overflow:hidden; background:#fffdfa;
 }
-.pinPiece{position:absolute;display:flex;align-items:center;justify-content:center;transform-origin:center;overflow:hidden}
-.pinPiece img{width:100%;height:100%;object-fit:contain;filter:none;transform-origin:center;will-change:transform}
-.pinPiece .pinLabel,.pinCaption{display:none}
-
-/* Separates: trousers/skirt establish the long vertical; top kisses the waistband; coat sits behind. */
-.pinterestOutfit.layout-separates .pin-outerwear{left:-9%;top:-3%;width:64%;height:64%;z-index:1;transform:rotate(-1deg)}
-.pinterestOutfit.layout-separates .pin-bottom{left:34%;top:11%;width:63%;height:84%;z-index:2}
-.pinterestOutfit.layout-separates .pin-top{left:38%;top:0;width:57%;height:48%;z-index:4}
-.pinterestOutfit.layout-separates .pin-shoes{left:-5%;bottom:-3%;width:48%;height:31%;z-index:7;transform:rotate(-3deg)}
-.pinterestOutfit.layout-separates .pin-bag{right:-5%;bottom:4%;width:37%;height:29%;z-index:8;transform:rotate(2deg)}
-.pinterestOutfit.layout-separates .pin-fragrance{left:2%;top:45%;width:14%;height:16%;z-index:10;transform:rotate(-4deg)}
-.pinterestOutfit.layout-separates .pin-accessory{right:27%;top:43%;width:14%;height:12%;z-index:10;transform:rotate(4deg)}
-.pinterestOutfit.layout-separates .pin-accessory.pin-a2{right:auto;left:4%;top:31%;width:13%;height:11%;transform:rotate(-7deg)}
-.pinterestOutfit.layout-separates .pin-accessory.pin-a3{right:2%;top:28%;width:12%;height:10%;transform:rotate(6deg)}
-.pinterestOutfit.layout-separates .pin-extra{right:1%;top:30%;width:16%;height:14%;z-index:9}
-
-/* Dress/one-piece: the dress owns the board, with outerwear tucked behind and finishers in its negative space. */
-.pinterestOutfit.layout-onepiece .pin-outerwear{left:-9%;top:-2%;width:64%;height:67%;z-index:1;transform:rotate(-1deg)}
-.pinterestOutfit.layout-onepiece .pin-onepiece{left:24%;top:-1%;width:65%;height:88%;z-index:3}
-.pinterestOutfit.layout-onepiece .pin-shoes{left:-4%;bottom:-3%;width:47%;height:30%;z-index:7;transform:rotate(-4deg)}
-.pinterestOutfit.layout-onepiece .pin-bag{right:-5%;bottom:4%;width:36%;height:28%;z-index:8}
-.pinterestOutfit.layout-onepiece .pin-fragrance{left:2%;top:44%;width:14%;height:16%;z-index:10}
-.pinterestOutfit.layout-onepiece .pin-accessory{right:3%;top:27%;width:13%;height:11%;z-index:10}
-.pinterestOutfit.layout-onepiece .pin-accessory.pin-a2{left:3%;right:auto;top:30%;width:12%;height:10%}
-
-/* Home/minimal: deliberately fewer pieces, but they should still fill the frame rather than float. */
+.pinterestOutfit .pinPiece{position:absolute;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.pinterestOutfit .pinPiece img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:center;filter:none}
+/* V6.9: air around the look, density within it. Outerwear is backdrop; core garments interlock;
+   finishing pieces deliberately overlap the silhouette rather than occupying category zones. */
+.pinterestOutfit.layout-separates .pin-outerwear{left:0%;top:2%;width:68%;height:60%;z-index:1;transform:rotate(-1deg)}
+.pinterestOutfit.layout-separates .pin-bottom{left:39%;top:10%;width:61%;height:84%;z-index:2;transform:rotate(.4deg)}
+.pinterestOutfit.layout-separates .pin-top{left:24%;top:20%;width:55%;height:48%;z-index:4;transform:rotate(-.4deg)}
+.pinterestOutfit.layout-separates .pin-shoes{left:24%;bottom:-1%;width:43%;height:25%;z-index:7;transform:rotate(8deg)}
+.pinterestOutfit.layout-separates .pin-bag{right:-1%;bottom:2%;width:42%;height:36%;z-index:8;transform:rotate(0deg)}
+.pinterestOutfit.layout-separates .pin-accessory{left:42%;top:58%;width:11%;height:10%;z-index:10;transform:rotate(2deg)}
+.pinterestOutfit.layout-separates .pin-accessory.pin-a2{left:13%;top:59%;width:14%;height:12%;z-index:10;transform:rotate(-5deg)}
+.pinterestOutfit.layout-separates .pin-accessory.pin-a3{left:auto;right:3%;top:30%;width:12%;height:10%;z-index:10;transform:rotate(5deg)}
+.pinterestOutfit.layout-separates .pin-extra{right:2%;top:32%;width:15%;height:13%;z-index:9}
+/* Dresses: coat behind, dress hero, bag/shoes hug the lower silhouette. */
+.pinterestOutfit.layout-onepiece .pin-outerwear{left:0%;top:2%;width:68%;height:64%;z-index:1;transform:rotate(-1deg)}
+.pinterestOutfit.layout-onepiece .pin-onepiece{left:27%;top:4%;width:61%;height:87%;z-index:3}
+.pinterestOutfit.layout-onepiece .pin-shoes{left:13%;bottom:0%;width:43%;height:25%;z-index:7;transform:rotate(7deg)}
+.pinterestOutfit.layout-onepiece .pin-bag{right:-1%;bottom:3%;width:39%;height:33%;z-index:8}
+.pinterestOutfit.layout-onepiece .pin-accessory{left:15%;top:56%;width:12%;height:10%;z-index:10}
+.pinterestOutfit.layout-onepiece .pin-accessory.pin-a2{left:auto;right:5%;top:31%;width:11%;height:9%;z-index:10}
+/* At-home: deliberately sparse piece count, but the clothes themselves stay large and connected. */
 .pinterestOutfit.layout-minimal{--board-h:455px}
-.pinterestOutfit.layout-minimal .pin-bottom{left:39%;top:8%;width:64%;height:88%;z-index:2}
-.pinterestOutfit.layout-minimal .pin-top{left:-3%;top:-1%;width:67%;height:58%;z-index:4}
-.pinterestOutfit.layout-minimal .pin-fragrance{right:1%;top:0;width:14%;height:16%;z-index:8}
-.pinterestOutfit.layout-minimal .pin-accessory{left:2%;bottom:8%;width:15%;height:12%;z-index:8}
-
-/* Garment-specific proportion corrections. */
-.pinterestOutfit .pin-tights{width:35%!important;height:66%!important;left:5%!important;top:28%!important;right:auto!important;bottom:auto!important;z-index:5!important}
-.pinterestOutfit .pin-neck-scarf{width:18%!important;height:18%!important}
-.pinterestOutfit .pin-earrings{width:10%!important;height:10%!important}
-.pinterestOutfit .pin-necklace{width:12%!important;height:12%!important}
-.pinterestOutfit .pin-sunglasses{width:16%!important;height:11%!important}
-.pinterestOutfit .pin-belt{width:20%!important;height:10%!important}
-.pinterestOutfit .pin-fragrance{max-width:58px}
-.pinPiece.pin-external:after{content:"NEW PIECE";position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;font-size:8px;letter-spacing:1.5px;background:#fff;padding:5px 7px}
-@media(max-width:390px){.pinterestOutfit{--board-h:490px}.pinterestOutfit.layout-minimal{--board-h:430px}}
+.pinterestOutfit.layout-minimal .pin-bottom{left:38%;top:8%;width:63%;height:89%;z-index:2}
+.pinterestOutfit.layout-minimal .pin-top{left:7%;top:9%;width:62%;height:59%;z-index:4}
+.pinterestOutfit.layout-minimal .pin-accessory{left:8%;bottom:9%;width:13%;height:11%;z-index:8}
+/* Role-specific scale: accessories are punctuation, tights are a garment. */
+.pinterestOutfit .pin-tights{width:34%!important;height:64%!important;left:7%!important;top:30%!important;z-index:5!important}
+.pinterestOutfit .pin-neck-scarf{width:16%!important;height:16%!important}
+.pinterestOutfit .pin-earrings{width:9%!important;height:9%!important}
+.pinterestOutfit .pin-necklace{width:11%!important;height:11%!important}
+.pinterestOutfit .pin-sunglasses{width:15%!important;height:10%!important}
+.pinterestOutfit .pin-belt{width:18%!important;height:9%!important}
+@media(max-width:390px){.pinterestOutfit{--board-h:530px}.pinterestOutfit.layout-minimal{--board-h:430px}}
 
 /* V6.5 — complete-look stylist */
 .stylingTips{margin:14px 0 0;padding:16px 17px;background:#f4f0e9;border:1px solid rgba(34,31,28,.09);font-size:12px;line-height:1.55}
@@ -558,6 +549,8 @@ function defaultStylingTips(pcs){
 }
 function outfitWhySmart(pcs){const top=pcs.find(i=>i.cat==='Top'),bottom=pcs.find(i=>i.cat==='Bottom'),hero=pcs.find(i=>garmentSignals(i).statement);if(top&&bottom){const a=garmentSignals(top),b=garmentSignals(bottom);return `${top.name} ${b.volume&&a.fitted?'keeps the upper half clean against the volume of '+bottom.name.toLowerCase():'works with '+bottom.name.toLowerCase()+' as the foundation'}. ${hero&&hero!==top&&hero!==bottom?hero.name+' gives the outfit one deliberate focal point. ':''}The remaining pieces are kept supportive so the look feels considered rather than over-styled.`}return outfitWhy(pcs)}
 function pinterestOutfitBoard(pcs,externalId){
+  // Fragrance lives in the Drobe, but it is not a wearable outfit component.
+  pcs=pcs.filter(i=>i.cat!=='Fragrance');
   const hasOne=pcs.some(i=>i.cat==='One-piece'||i.cat==='Dress');
   const ctx=stylingContext();
   const layout=ctx.atHome?'layout-minimal':(hasOne?'layout-onepiece':'layout-separates');
@@ -571,12 +564,12 @@ function pinterestOutfitBoard(pcs,externalId){
     else if(i.cat==='Shoes')base='pin-shoes';
     else if(i.cat==='Bag')base='pin-bag';
     else if(i.cat==='Accessory'){accessoryN++;base='pin-accessory pin-a'+accessoryN}
-    else if(i.cat==='Fragrance')base='pin-fragrance';
     else base='pin-extra';
-    const role=practicalRole(i); const roleClass=role?' pin-'+String(role).replace(/[^a-z0-9]+/g,'-'):''; return (i.id===externalId?'pin-external ':'')+base+roleClass;
+    const role=practicalRole(i); const roleClass=role?' pin-'+String(role).replace(/[^a-z0-9]+/g,'-'):'';
+    return (i.id===externalId?'pin-external ':'')+base+roleClass;
   };
-  // Paint order is intentional: coat behind, main clothes next, finishing pieces over the clothes.
-  const order={'Outerwear':1,'Bottom':2,'Dress':2,'One-piece':2,'Top':3,'Shoes':4,'Bag':5,'Accessory':6,'Fragrance':7};
+  // Pinterest hierarchy: backdrop → core → front garment → finishing pieces → tiny detail.
+  const order={'Outerwear':1,'Bottom':2,'Dress':2,'One-piece':2,'Top':3,'Shoes':5,'Bag':6,'Accessory':7};
   const arranged=[...pcs].sort((a,b)=>(order[a.cat]||8)-(order[b.cat]||8));
   return `<div class="pinterestOutfit ${layout}">${arranged.map(i=>`<div class="pinPiece ${cls(i)}">${itemImg(i)}</div>`).join('')}</div>`;
 }
@@ -603,6 +596,7 @@ function tightenPinterestBoard(){
 }
 function safeOutfitBoard(pcs){return pinterestOutfitBoard(pcs)}
 function showBrainLook(pcs,data){
+  pcs=pcs.filter(i=>i.cat!=='Fragrance');
   const title=prefs.occasion+' · '+prefs.mood,why=data.why||outfitWhySmart(pcs),signals=(data.signals||['Context-aware','Proportion-led','Complete look']).slice(0,5),tips=(data.stylingTips||defaultStylingTips(pcs)).slice(0,5);
   modal.innerHTML=`<div class="head"><button class="iconbtn" onclick="modal.classList.remove('open')">←</button><div class="eyebrow">YOUR LOOK</div><span style="width:40px"></span></div><div class="resultTitle" style="margin-top:18px">${prefs.occasion}</div><div class="resultSub">${prefs.mood} · ${prefs.trend}</div><div class="lookPieceCount">${pcs.length} pieces · chosen for this look, not a fixed formula</div>${data.trendNote?`<div class="trendBadge">${data.trendNote}</div>`:''}${safeOutfitBoard(pcs)}<div class="brainSignals">${signals.map(x=>`<span class="brainSignal">${x}</span>`).join('')}</div><div class="brainWhy"><b>Why I’d put you in this</b>${why}</div>${tips.length?`<div class="stylingTips"><b>How I’d style it</b><ul>${tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}<div class="actions"><button onclick="styleFeedbackEvent('wear');wearGeneratedToday();modal.classList.remove('open')">Wear this</button><button onclick="styleFeedbackEvent('reject');generateLook()">Try another</button><button onclick="styleFeedbackEvent('save');saveGeneratedLook()">♡ Save</button></div><div class="brainFeedback"><button onclick="styleFeedbackEvent('reject');generateLook()">Not feeling it</button><button onclick="styleFeedbackEvent('swap');generateLook()">Give me a different direction</button></div><button class="secondary wide" style="margin-top:10px" onclick="modal.classList.remove('open')">Change the brief</button>`;
   window.currentGenerated={title,ids:pcs.map(i=>i.id),why,stylingTips:tips};modal.classList.add('open');modal.scrollTop=0;requestAnimationFrame(()=>requestAnimationFrame(tightenPinterestBoard));
