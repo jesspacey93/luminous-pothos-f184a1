@@ -377,7 +377,7 @@ let items=seed.map(si=>{
 const seedMatches=i=>seed.some(si=>(si.seedKey&&i.seedKey===si.seedKey)||(si.img&&i.img===si.img)||(norm(i.name)===norm(si.name)&&norm(i.brand)===norm(si.brand)));
 existingItems.filter(i=>!seedMatches(i)&&(Number(i.id)>1000000000000||String(i.img||'').startsWith('data:image/'))).forEach(i=>items.push(i));
 localStorage.setItem('jw_items',JSON.stringify(items));
-localStorage.setItem('jw_catalogue_version','7.2');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
+localStorage.setItem('jw_catalogue_version','7.6');let saved=JSON.parse(localStorage.getItem('jw_saved')||'[]');let worn=JSON.parse(localStorage.getItem('jw_worn')||'[]');let cat='All';let prefs={occasion:'Office',moods:['Polished'],weather:'Mild',trend:'Current'};Object.defineProperty(prefs,'mood',{get(){return (this.moods||[]).join(' + ')||'You decide'},set(v){this.moods=Array.isArray(v)?v:[v]}});let styleFeedback=JSON.parse(localStorage.getItem('dd_style_feedback')||'[]');let styleInspiration=localStorage.getItem('dd_style_inspiration')||'Chocolate brown, cream, black and denim; polished Scandi; compact tops with relaxed bottoms; suede, pointed or low-profile shoes, gold jewellery; one strong piece rather than lots of competing details.';
 const looks=[];
 const outfitSlots={
   required:['TopOrDress','BottomIfNoDress','Shoes','Bag','Accessory'],
@@ -595,9 +595,24 @@ async function generateLook(forceId){
     if(looks.length<3)throw new Error('Three looks were not returned');
     showBrainLooks(looks,0);
   }catch(e){
-    const first=buildSmartFallback(forceId), pool=candidateWardrobe(forceId).filter(i=>i.cat!=='Fragrance');
-    const makeAlt=(seed)=>{const base=first.map(x=>x.id);const alt=[...first];const cats=['Top','Bottom','Outerwear','Shoes','Bag'];cats.forEach((cat,ci)=>{if((ci+seed)%2!==0)return;const pos=alt.findIndex(x=>x.cat===cat);if(pos<0)return;const opts=pool.filter(x=>x.cat===cat&&!base.includes(x.id)).sort((a,b)=>personalScore(b)-personalScore(a));if(opts[seed-1])alt[pos]=opts[seed-1]});return alt.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)};
-    const fallbacks=[first,makeAlt(1),makeAlt(2)].map((pcs,n)=>({ids:pcs.filter(i=>i.cat!=='Fragrance').map(i=>i.id),label:['Best fit','Alternative','Different direction'][n],why:outfitWhySmart(pcs),stylingTips:defaultStylingTips(pcs),qualityScore:70}));
+    const pool=candidateWardrobe(forceId).filter(i=>i.cat!=='Fragrance');
+    const ctx=stylingContext();
+    const ranked=(cat,filter=()=>true)=>pool.filter(i=>i.cat===cat&&filter(i)&&fallbackAllowed(i,ctx)).sort((a,b)=>personalScore(b)-personalScore(a));
+    const usedCore=new Set();
+    const finish=(core,seed)=>{let pcs=[...core], used=new Set(pcs.map(x=>x.id)); const add=(cat,filter=()=>true)=>{let x=ranked(cat,i=>!used.has(i.id)&&filter(i))[(seed-1)%Math.max(1,ranked(cat,i=>!used.has(i.id)&&filter(i)).length)];if(x){pcs.push(x);used.add(x.id)}};
+      if(!ctx.atHome){add('Shoes');add('Bag')}
+      if(!ctx.atHome&&['Cool','Cold'].includes(prefs.weather))add('Top',i=>/cardigan|jumper|knit|sweater|vest/.test(itemText(i))&&!core.some(c=>c.id===i.id));
+      if(!ctx.atHome&&(['Cool','Cold'].includes(prefs.weather)||/office|day out|shopping|errands|pub|dinner|drinks|date night|night out|event|wedding/.test(ctx.occ)))add('Outerwear');
+      add('Accessory',i=>practicalRole(i)==='earrings'); if(prefs.weather==='Cold')add('Accessory',i=>practicalRole(i)==='scarf'); return pcs.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)};
+    const tops=ranked('Top'), bottoms=ranked('Bottom'), dresses=[...ranked('Dress'),...ranked('One-piece')];
+    const bottomFamily=i=>/jean|denim/.test(itemText(i))?'denim':/skirt|skort|short/.test(itemText(i))?'skirt':'tailored';
+    let cores=[];
+    const bestPair=(fam)=>{let best=null,score=-1e9;tops.slice(0,12).forEach(a=>bottoms.filter(b=>bottomFamily(b)===fam).slice(0,10).forEach(b=>{let sc=personalScore(a)+personalScore(b)+pairCompatibility(a,b);if(sc>score){score=sc;best=[a,b]}}));return best};
+    ['denim','tailored','skirt'].forEach(f=>{let x=bestPair(f);if(x)cores.push({core:x,label:{denim:'Denim layered',tailored:'Polished tailoring',skirt:'Feminine contrast'}[f]})});
+    if(dresses[0])cores.push({core:[dresses[0]],label:'One-piece direction'});
+    if(forceId){const forced=items.find(i=>i.id===forceId);cores=cores.map(x=>x.core.some(i=>i.id===forceId)?x:{...x,core:[forced,...x.core.filter(i=>!['Top','Bottom','Dress','One-piece'].includes(forced.cat)||i.cat!==forced.cat)]})}
+    cores=cores.slice(0,3); while(cores.length<3){const x=buildSmartFallback(forceId);cores.push({core:x.filter(i=>['Top','Bottom','Dress','One-piece'].includes(i.cat)),label:'Different direction'})}
+    const fallbacks=cores.map((x,n)=>{let pcs=finish(x.core,n+1);return {ids:pcs.map(i=>i.id),label:x.label,why:outfitWhySmart(pcs),stylingTips:defaultStylingTips(pcs),qualityScore:70}});
     showBrainLooks(fallbacks,0);
   }
 }
