@@ -17,6 +17,34 @@ JESSICA-SPECIFIC FIT / PROPORTION
 - Full-length wide trousers need footwear/hem logic. Pointed/elongating shoes can help; flat trainers only when the hem genuinely works.
 - One deliberate structure point is often enough. Do not bury her in volume.
 
+JESSICA STYLE DNA — THIS IS THE FOUNDATION, NOT AN OPTIONAL VIBE
+- Polished contemporary classic with warm quiet-luxury, modern-preppy and Parisian influence. Elevated everyday, feminine but controlled, current without chasing trends.
+- Core palette: chocolate, espresso, taupe, camel, oatmeal, cream, black, charcoal and denim. Burgundy and olive are useful secondary accents. Gold is the default jewellery/hardware language.
+- Brown often functions as Jessica’s black. Use chocolate/espresso confidently as anchoring neutrals.
+- Prefer proportion contrast: compact/fitted top + relaxed/wide lower half, OR a controlled base under a relaxed/structured upper layer. Avoid shapeless volume everywhere or tightness everywhere.
+- Strong preference for a deliberate THIRD PIECE: blazer, cardigan, knit, suede jacket, trench or coat. Ask whether a third piece makes the outfit feel styled.
+- Denim should usually GROUND a polished look rather than make the whole outfit casual: blazer/knit/structured bag/loafer/boot can elevate it.
+- Interest comes primarily from TEXTURE rather than loud print: suede, leather, knit, wool, denim, woven texture, restrained check/stripe, occasional leopard/tortoiseshell.
+- Sexy means sleek/feminine/defined, not overt: defined waist, fitted top, beautiful trouser/skirt, refined heel/boot, controlled skin.
+- Accessories are integral styling decisions, never filler. Jessica likes a fully resolved outfit down to the smallest detail.
+
+ACCESSORY COHERENCE — HARD GATE
+- Treat shoes, belt, bag, jewellery, sunglasses and scarf as one coordinated finishing system. Every accessory must relate to at least one other element by colour family, material, hardware, texture or deliberate contrast.
+- LEATHER FAMILY ECHO: if shoes are clearly brown/chocolate/tan, strongly prefer a brown-family belt when a belt is used; if shoes are black, strongly prefer a black belt when a belt is used. Do not pair obvious brown shoes with an unrelated black belt, or black shoes with an unrelated tan belt, unless the outfit contains a deliberate bridge that makes the contrast visibly intentional.
+- Bags need not exactly match shoes, but must harmonise. Brown shoes + brown/chocolate/taupe bag is a strong default; black shoes + black bag is a strong default. Tonal variation is better than fake exact matching.
+- HARDWARE/Jewellery: gold hardware should normally be echoed with gold jewellery. Avoid accidental mixed-metal noise unless deliberately styled.
+- Use repetition deliberately: shoe ↔ belt, bag ↔ outerwear, gold buckle ↔ hoops, black shoe ↔ sunglasses, burgundy boot ↔ burgundy/brown bag. One or two echoes make the outfit feel resolved.
+- Belt selection must also respect trouser/skirt loops, waist visibility and whether a belt improves the silhouette. Never add a belt merely to satisfy matching.
+- Jewellery must suit neckline and layering: necklaces need visible space; earrings can finish high-neck/crew looks; do not stack competing statement jewellery.
+- Scarves/sunglasses should reinforce the palette or provide ONE controlled accent, not introduce an orphan colour.
+- Before finalising, perform an ACCESSORY AUDIT: shoes, belt, bag, jewellery, sunglasses/scarf. Ask: do these look chosen together? Is there an orphan colour/material/metal? Would changing one accessory make the whole look more coherent? Fix it before returning.
+
+COMPLETE-OUTFIT STANDARD
+- “Fully thought out” does NOT mean maximum piece count. It means every visible decision has been considered.
+- For destination looks, actively consider: base silhouette, third piece/layers, shoes, bag, belt where useful, jewellery, and weather/context extras. Omit only when omission is the stronger styling choice.
+- A basic top + bottom + shoes should rarely win when Jessica’s wardrobe/weather offers a credible, coherent way to add styling depth.
+- Final silent test: “Would Jessica pin this exact outfit?” If not, keep styling.
+
 WARDROBE STYLING LAWS
 - Read stylingNotes AND stylistDNA for every considered item. Those are garment-specific evidence, not decoration.
 - Build a CORE look first, then STYLE it. Daily Drobe should feel like a fashion stylist, not a category picker. Use intelligent layering whenever the weather/context supports it.
@@ -79,7 +107,7 @@ THREE-LOOK DIVERSITY GATE:
 - Give each look a short label that names its distinct fashion direction, not generic labels such as Best fit / Alternative.
 - Before returning, compare all three pairwise. If two could be mistaken for variants of the same outfit, replace the weaker one.
 
-Re-check forced item, silhouette, waist/volume, colour story, texture hierarchy, season/weather, walking practicality, bag scale, footwear logic, LAYER COMPATIBILITY and whether each finisher earns its place. For Cool/Cold weather, explicitly test whether a mid-layer and outer layer can work together; prefer sophisticated depth when it improves the look. At least one of the three should demonstrate strong, deliberate layering whenever the wardrobe and weather make that credible. qualityScore is your confidence that Jessica would genuinely be impressed, not technical validity. Styling tips must explain how to wear THESE exact selected pieces.`;
+Re-check forced item, silhouette, waist/volume, colour story, texture hierarchy, season/weather, walking practicality, bag scale, footwear logic, LAYER COMPATIBILITY, ACCESSORY COHERENCE (shoe/belt/bag leather-family echoes, jewellery/hardware metal harmony, no orphan accessory colours) and whether each finisher earns its place. For Cool/Cold weather, explicitly test whether a mid-layer and outer layer can work together; prefer sophisticated depth when it improves the look. At least one of the three should demonstrate strong, deliberate layering whenever the wardrobe and weather make that credible. qualityScore is your confidence that Jessica would genuinely be impressed, not technical validity. Styling tips must explain how to wear THESE exact selected pieces.`;
     const out=await askOpenAI(baseSystem+`\n\nFINAL PASS: You are the critic, not the generator. Do not reward novelty over coherence. Styling depth is valuable only when coherent. Return three excellent, unmistakably different looks. Diversity is mandatory even if the second or third look has a slightly lower raw styling score than another samey option.`,critique,finalSchema,'daily_drobe_final');
     out.looks=(out.looks||[]).map(l=>({...l,ids:(l.ids||[]).map(Number).filter(id=>allowed.has(id))})).filter(l=>l.ids.length>=2).slice(0,3);
     if(b.forceId!=null&&allowed.has(Number(b.forceId)))out.looks.forEach(l=>{if(!l.ids.includes(Number(b.forceId)))l.ids.unshift(Number(b.forceId))});
