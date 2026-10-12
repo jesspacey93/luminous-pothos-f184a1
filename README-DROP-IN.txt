@@ -1,14 +1,20 @@
-DAILY DROBE V8.6 — LOOKS ARCHIVE
+DAILY DROBE V8.7 — REFINED MINIMAL + LOOKS NAV FIX
 
-Drop into the root of the existing repo and replace matching files.
+Replace these in the root of the existing repo:
+- index.html
+- manifest.webmanifest
+- icons/
+
 Keep assets/ and netlify/ intact.
 
-Changes:
-- Bottom nav: HOME · DROBE · LOOKS · PACK · SHOP
-- HOME opens the existing “What are you doing today?” styling planner.
-- LOOKS is a new outfit archive.
-- WORN reads existing jw_worn data.
-- SAVED reads existing jw_saved data.
-- Clean 2-column editorial lookbook.
-- Look detail actions: WEAR AGAIN / WEAR THIS, RESTYLE, REMOVE.
-- Existing V8.5 seamless splash + approved icon retained.
+Fix:
+The V8.6 button had data-page="looks" but still contained onclick="go('style')" and the visible label remained Style. This is now corrected to LOOKS -> go('looks').
+
+Navigation:
+HOME · DROBE · LOOKS · PACK · SHOP
+
+HOME remains the “What are you doing today?” styling entry point.
+LOOKS opens the WORN / SAVED archive.
+
+Also begins the approved Refined Minimal visual direction:
+white/black foundation, warm ivory selected states, finer rules, no shadows, square geometry, quieter bottom navigation.
