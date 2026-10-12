@@ -1,13 +1,9 @@
-DAILY DROBE V8.8 — CINEMATIC FOCUS PULL
+DAILY DROBE V8.9 — FASTER FOCUS PULL
 
-Built on V8.7, so it retains:
-- Correct HOME · DROBE · LOOKS · PACK · SHOP navigation
-- LOOKS WORN / SAVED archive
-- Refined Minimal styling direction
-- Approved DD icon and seamless black-door splash
+Built on V8.8.
 
-New:
-- Landing page is heavily defocused (22px blur) while the black doors open.
-- No focus change happens during the door movement.
-- Once the doors have fully cleared, the splash is removed and the live “What are you doing today?” page smoothly pulls into focus over 1.35 seconds.
-- Subtle scale reduction accompanies the focus pull for a lens-like, premium finish.
+Only the post-splash focus timing has been changed:
+- Strong blur is retained while the black doors open.
+- Once the doors clear, focus now resolves in 0.55 seconds instead of 1.35 seconds.
+- The easing remains smooth but no longer lingers.
+- All V8.8 functionality, LOOKS navigation, Refined Minimal styling, splash and app icon are retained.

@@ -169,13 +169,12 @@ body.splashRunning .bottom{
 }
 body.focusPull .app,
 body.focusPull .bottom{
-  animation:ddFocusPull 1.35s cubic-bezier(.22,.61,.36,1) forwards!important;
+  animation:ddFocusPull .55s cubic-bezier(.22,.61,.36,1) forwards!important;
 }
 @keyframes ddFocusPull{
-  0%{transform:scale(1.035);filter:blur(22px);opacity:.72}
-  22%{transform:scale(1.026);filter:blur(18px);opacity:.78}
-  55%{transform:scale(1.012);filter:blur(8px);opacity:.9}
-  82%{transform:scale(1.003);filter:blur(2px);opacity:.98}
+  0%{transform:scale(1.025);filter:blur(22px);opacity:.76}
+  38%{transform:scale(1.012);filter:blur(9px);opacity:.90}
+  72%{transform:scale(1.003);filter:blur(2px);opacity:.98}
   100%{transform:scale(1);filter:blur(0);opacity:1}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1058,7 +1057,7 @@ function showColourPrototype(){let has=document.getElementById('colourSelfie').f
     splash.remove();
     document.body.classList.remove('splashRunning');
     document.body.classList.add('focusPull');
-    setTimeout(()=>document.body.classList.remove('focusPull'),1400);
+    setTimeout(()=>document.body.classList.remove('focusPull'),600);
   },5650);
 })();
 </script>
