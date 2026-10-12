@@ -1,18 +1,14 @@
-DAILY DROBE V8.5 — SPLASH FIX
+DAILY DROBE V8.6 — LOOKS ARCHIVE
 
-Drop into the ROOT of the existing repo and replace:
-- index.html
-- manifest.webmanifest
-- icons/
+Drop into the root of the existing repo and replace matching files.
+Keep assets/ and netlify/ intact.
 
-Keep the existing assets/ and netlify/ folders.
-
-Fixes:
-- Correct initial destination is the existing STYLE page: “What are you doing today?”
-- Removed the independent white centre-line animation.
-- Removed the end opacity/cut transition.
-- The real Style page exists underneath the splash for the entire animation.
-- The two black screen halves continuously slide away to expose that live page.
-- Each half of the DD travels outward with its black door.
-- Longer static logo hold before movement.
-- Approved app icon retained.
+Changes:
+- Bottom nav: HOME · DROBE · LOOKS · PACK · SHOP
+- HOME opens the existing “What are you doing today?” styling planner.
+- LOOKS is a new outfit archive.
+- WORN reads existing jw_worn data.
+- SAVED reads existing jw_saved data.
+- Clean 2-column editorial lookbook.
+- Look detail actions: WEAR AGAIN / WEAR THIS, RESTYLE, REMOVE.
+- Existing V8.5 seamless splash + approved icon retained.

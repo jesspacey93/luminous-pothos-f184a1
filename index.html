@@ -112,6 +112,36 @@ body.splashRunning .app,body.splashRunning .bottom{transform:scale(1.012);filter
 @keyframes ddLogoRight{0%{opacity:0;transform:translateY(-50%) translateX(0) scale(.985)}12%,57%{opacity:1;transform:translateY(-50%) translateX(0) scale(1)}64%{opacity:1;transform:translateY(-50%) translateX(2px) scale(1)}100%{opacity:1;transform:translateY(-50%) translateX(52vw) scale(1)}}
 @keyframes ddHomeSettle{0%,60%{transform:scale(1.012);filter:blur(1px)}76%{filter:blur(.25px)}100%{transform:scale(1);filter:blur(0)}}
 @media (prefers-reduced-motion:reduce){#ddSplash{display:none}body.splashRunning{overflow:auto}body.splashRunning .app,body.splashRunning .bottom{animation:none;transform:none;filter:none}}
+
+/* V8.6 — LOOKS ARCHIVE */
+.looksPage{padding:0 18px 110px;background:#fff;min-height:100vh}
+.looksHeader{text-align:center;padding:74px 0 26px}
+.looksHeader .eyebrow{font-size:10px;font-weight:700;letter-spacing:.31em;margin-bottom:54px}
+.looksHeader h1{font-size:30px;font-weight:400;letter-spacing:.04em;margin:0 0 35px}
+.looksTabs{display:flex;justify-content:center;gap:42px;border-bottom:1px solid #e7e7e7}
+.looksTab{appearance:none;border:0;background:transparent;padding:0 2px 13px;font:600 11px/1 "Gill Sans","Gill Sans MT","Gill Sans Nova","Avenir Next",Arial,sans-serif;letter-spacing:.18em;color:#999;position:relative}
+.looksTab.active{color:#090909}
+.looksTab.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:#090909}
+.looksArchive{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 14px;padding-top:28px}
+.lookCard{min-width:0;cursor:pointer}
+.lookThumb{position:relative;aspect-ratio:4/5;background:#fafafa;overflow:hidden}
+.lookThumb img{width:100%;height:100%;object-fit:contain;display:block}
+.lookMeta{padding-top:11px}
+.lookDate{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.lookContext{font-size:12px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.looksEmpty{text-align:center;padding:100px 28px 0;color:#777;font-size:13px;line-height:1.55}
+.lookDetailOverlay{position:fixed;inset:0;z-index:10020;background:#fff;overflow:auto;padding:52px 22px 110px}
+.lookDetailTop{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;margin-bottom:22px}
+.lookDetailTop button{border:0;background:none;font-size:27px;font-weight:300;text-align:left;padding:0}
+.lookDetailTop strong{text-align:center;font-size:10px;letter-spacing:.22em}
+.lookDetailArt{min-height:52vh;display:grid;place-items:center}
+.lookDetailArt img{max-width:100%;max-height:58vh;object-fit:contain}
+.lookDetailInfo{text-align:center;margin:20px 0 32px}
+.lookDetailInfo .date{font-size:10px;font-weight:700;letter-spacing:.18em;margin-bottom:8px}
+.lookDetailInfo .context{font-size:13px;color:#555}
+.lookDetailActions{border-top:1px solid #e7e7e7}
+.lookDetailActions button{width:100%;border:0;border-bottom:1px solid #e7e7e7;background:#fff;text-align:left;padding:18px 2px;font:600 11px "Gill Sans","Gill Sans MT","Gill Sans Nova","Avenir Next",Arial,sans-serif;letter-spacing:.14em}
+.lookDetailActions button.primary{background:#090909;color:#fff;text-align:center;margin-top:22px;border:0;padding:17px}
 </style><style id="v75-three-looks">
 .resultMinimalHead{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;margin:0 0 18px;font-size:8px;letter-spacing:.2em;text-align:center}.resultMinimalHead .iconbtn{text-align:left}.resultMinimalHead span:last-child{text-align:right;color:#777;letter-spacing:.08em}.lookRail{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -22px 20px;padding:0 22px 8px;scrollbar-width:none}.lookRail::-webkit-scrollbar{display:none}.lookPreview{flex:0 0 44%;scroll-snap-align:center;border:1px solid #e5e5e5;background:#fff;padding:0;position:relative}.lookPreview.active{border-color:#111}.lookPreview>span{position:absolute;z-index:20;top:8px;left:8px;font-size:8px;letter-spacing:.12em}.lookPreview .pinterestOutfit{min-height:210px!important;height:210px!important;margin:0!important;transform:scale(.96)}.activeLookLabel{text-align:center;text-transform:uppercase;font-size:9px;letter-spacing:.18em;margin:8px 0 0}.lookDots{display:flex;justify-content:center;gap:7px;margin:2px 0 20px}.lookDots button{width:5px;height:5px;border:0;border-radius:50%;background:#ccc;padding:0}.lookDots button.on{background:#111}.resultContext{text-align:center;font-size:10px;letter-spacing:.08em;margin:4px 0 24px;color:#555}.whyMinimal{border-top:1px solid #ddd;border-bottom:1px solid #ddd;padding:15px 0;margin:0}.whyMinimal summary{list-style:none;display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;cursor:pointer}.whyMinimal summary::-webkit-details-marker{display:none}.whyMinimal p,.whyMinimal li{font-size:12px;line-height:1.55;color:#555}.whyMinimal ul{padding-left:17px;margin-bottom:4px}.resultLinks{display:flex;justify-content:space-between;padding:18px 0 2px}.resultLinks button,.notFeeling{border:0;background:none;font:600 9px "Gill Sans","Gill Sans MT",Arial,sans-serif;letter-spacing:.14em;padding:8px 0}.wearBtn{margin-top:14px!important}.notFeeling{width:100%;color:#777;margin-top:8px}.brainSignals,.brainWhy,.stylingTips,.trendBadge,.lookPieceCount,.brainFeedback{display:none!important}.modal .pinterestOutfit{background:#fff!important;border:0!important;box-shadow:none!important}
 
@@ -131,9 +161,22 @@ body.splashRunning .app,body.splashRunning .bottom{transform:scale(1.012);filter
 <section id="style" class="page stylePlanner active"><div class="brandmark pageBrand">DAILY DROBE</div><h1>What are you doing today?</h1><div class="field occasionField"><div id="occasions" class="occasionGrid"></div></div><div class="field vibeField"><label>Vibe</label><div id="moods" class="vibeRow"></div></div><div class="field weatherField"><label>Weather</label><div class="tempControl"><button onclick="changeTemp(-1)" aria-label="Lower temperature">−</button><strong id="tempValue">12°C</strong><button onclick="changeTemp(1)" aria-label="Raise temperature">+</button></div><div id="conditions" class="conditionRow"></div></div><button class="primary wide styleMeCTA" onclick="generateLook()">STYLE ME →</button><div id="result"></div><textarea id="notes" style="display:none"></textarea><div id="weather" style="display:none"></div><div id="trendLevel" style="display:none"></div><div id="vibeSummary" style="display:none"></div></section>
 <section id="outfits" class="page"><div class="brandmark pageBrand">DAILY DROBE</div><h1>Looks</h1><div class="lookTabs"><button id="savedTab" class="lookTab active" onclick="setLooksTab('saved')">SAVED</button><button id="wornTab" class="lookTab" onclick="setLooksTab('worn')">WORN</button></div><div id="looksSavedPanel"><div id="savedLooks" class="savedGrid"></div></div><div id="looksWornPanel" style="display:none"><div id="wornSummary"></div><div id="wornLooks"></div><div id="wearInsights" class="insightBox"></div></div></section>
 <section id="calendar" class="page"><div class="brandmark pageBrand">DAILY DROBE</div><div class="monthHead"><button onclick="changeMonth(-1)">‹</button><h1 id="calendarTitle" style="font-size:30px;margin:5px 0"></h1><button onclick="changeMonth(1)">›</button></div><div id="calendarStats" class="diarySummary"></div><div class="calendarWrap"><div class="calendar" id="cal"></div></div><div class="sectionHead"><h2>Recently worn</h2></div><div id="recentWorn"></div></section>
+
+<section id="looks" class="page looksPage">
+  <div class="looksHeader">
+    <div class="eyebrow">DAILY DROBE</div>
+    <h1>YOUR LOOKS</h1>
+    <div class="looksTabs" role="tablist">
+      <button class="looksTab active" data-look-tab="worn">WORN</button>
+      <button class="looksTab" data-look-tab="saved">SAVED</button>
+    </div>
+  </div>
+  <div id="looksArchive" class="looksArchive"></div>
+  <div id="looksEmpty" class="looksEmpty" hidden></div>
+</section>
 <section id="pack" class="page packPage"><div class="brandmark pageBrand">DAILY DROBE</div><div id="packRoot"></div></section>
 <section id="shop" class="page"><div class="brandmark pageBrand">DAILY DROBE</div><h1>Shop</h1><div class="shopMode"><button id="shopOutfitMode" class="sel" onclick="setShopMode('outfit')"><b>Find an outfit</b><small>Shop a whole look for your plans.</small></button><button id="shopItemMode" onclick="setShopMode('item')"><b>Find an item</b><small>Tell me exactly what you're after.</small></button></div><div id="shopOutfitForm" class="form"><label>What’s it for?</label><input id="shopOccasion" placeholder="Dinner in London, wedding, holiday…"><label>Total budget</label><input id="shopBudget" placeholder="e.g. £150"><label>Where should I look?</label><input id="shopStores" placeholder="Zara, ASOS, H&M… or leave blank"><label>Anything else?</label><textarea id="shopNotes" placeholder="No heels, neutral colours, nothing too fitted…"></textarea><button id="shopOutfitBtn" class="primary wide" onclick="liveShop('outfit')">Search live shops →</button></div><div id="shopItemForm" class="form" style="display:none"><label>What are you looking for?</label><input id="shopQuery" placeholder="e.g. chocolate brown suede jacket"><label>Budget</label><input id="itemBudget" placeholder="e.g. under £100"><label>Shops</label><input id="itemStores" placeholder="Any shop"><label>Size</label><input id="itemSize" placeholder="e.g. 6–8"><button id="shopItemBtn" class="primary wide" onclick="liveShop('item')">Search live shops →</button></div><div id="shopResults"></div></section><section id="profile" class="page"><div class="brandmark pageBrand">DAILY DROBE</div><h1>Profile</h1><div class="profileHero"><div class="avatar">JP</div><h2 style="margin-bottom:3px">Jessica</h2><div class="eyebrow">MODERN EUROPEAN PREPPY</div></div><button class="profileFeature" onclick="openColourAnalysis()"><b>Colour analysis</b><span>›</span></button><button class="profileFeature" onclick="go('outfits')"><b>My looks</b><span>›</span></button><button class="profileFeature" onclick="openStyleInspiration()"><b>Style inspiration</b><span>›</span></button><div class="card"><div class="row"><span>Palette</span><b>Black · Cream · Taupe · Brown</b></div><div class="row"><span>Best rise</span><b>High rise</b></div><div class="row"><span>Go-to silhouette</span><b>Defined waist + long leg</b></div><div class="row"><span>Favourite styling</span><b>Relaxed tailoring</b></div></div><h2 class="minimalSectionTitle">Favourites</h2><div><span class="tag">Wide-leg trousers</span><span class="tag">Straight-leg denim</span><span class="tag">Fitted tops</span><span class="tag">Wrap necklines</span><span class="tag">Oversized blazers</span><span class="tag">Pointed boots</span></div><h2 class="minimalSectionTitle">Fit notes</h2><div class="card profileNotes" style="font-size:12px;line-height:1.55">Defined waist · balanced proportions · relaxed tailoring</div></section>
-</main><nav class="bottom"><button class="nav" data-page="home" onclick="go('home')"><b>⌂</b>Home</button><button class="nav" data-page="wardrobe" onclick="go('wardrobe')"><b>⌑</b>Drobe</button><button class="nav active" data-page="style" onclick="go('style')"><b>✦</b>Style</button><button class="nav" data-page="pack" onclick="go('pack')"><b>▣</b>Pack</button><button class="nav" data-page="shop" onclick="go('shop')"><b>⌕</b>Shop</button></nav>
+</main><nav class="bottom"><button class="nav" data-page="home" onclick="go('home')"><b>⌂</b>Home</button><button class="nav" data-page="wardrobe" onclick="go('wardrobe')"><b>⌑</b>Drobe</button><button class="nav active" data-page="looks" onclick="go('style')"><b>✦</b>Style</button><button class="nav" data-page="pack" onclick="go('pack')"><b>▣</b>Pack</button><button class="nav" data-page="shop" onclick="go('shop')"><b>⌕</b>Shop</button></nav>
 <div id="detail" class="overlay"></div><div id="modal" class="overlay"></div><div id="toast" class="toast"></div>
 <script>
 const A='assets/';
@@ -1062,4 +1105,106 @@ const _v82RenderTrip=renderTrip;
 renderTrip=function(){_v82RenderTrip();let tabs=document.querySelectorAll('.packTab');if(tabs[0])tabs[0].textContent='Wardrobe';if(tabs[2])tabs[2].textContent='Pack'};
 </script>
 
+
+<script>
+(function(){
+  const WORN_KEY='jw_worn';
+  const SAVED_KEY='jw_saved';
+
+  function read(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
+  function write(key,val){localStorage.setItem(key,JSON.stringify(val))}
+
+  function normalizeLook(x,kind){
+    if(!x)return null;
+    const date=x.wornAt||x.savedAt||x.date||x.createdAt||Date.now();
+    const context=x.activity||x.context||x.occasion||x.title||'Look';
+    const vibe=x.vibe||x.mood||'';
+    const image=x.compositeImage||x.image||x.preview||x.flatlay||x.boardImage||'';
+    return {raw:x,kind,date,context,vibe,image};
+  }
+
+  function getLooks(kind){
+    const arr=read(kind==='worn'?WORN_KEY:SAVED_KEY);
+    return (Array.isArray(arr)?arr:[]).map(x=>normalizeLook(x,kind)).filter(Boolean)
+      .sort((a,b)=>new Date(b.date)-new Date(a.date));
+  }
+
+  function niceDate(v){
+    const d=new Date(v); if(isNaN(d))return String(v||'');
+    return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}).toUpperCase();
+  }
+
+  function render(kind){
+    const host=document.getElementById('looksArchive'), empty=document.getElementById('looksEmpty');
+    if(!host||!empty)return;
+    const looks=getLooks(kind); host.innerHTML='';
+    if(!looks.length){
+      empty.hidden=false;
+      empty.textContent=kind==='worn'
+        ? 'Looks you wear will appear here.'
+        : 'Looks you save will appear here.';
+      return;
+    }
+    empty.hidden=true;
+    looks.forEach((look,idx)=>{
+      const card=document.createElement('article');card.className='lookCard';
+      const art=document.createElement('div');art.className='lookThumb';
+      if(look.image){const img=document.createElement('img');img.src=look.image;img.alt='';art.appendChild(img)}
+      const meta=document.createElement('div');meta.className='lookMeta';
+      meta.innerHTML='<div class="lookDate">'+niceDate(look.date)+'</div><div class="lookContext">'+
+        [look.context,look.vibe].filter(Boolean).join(' · ')+'</div>';
+      card.append(art,meta);card.addEventListener('click',()=>openLook(look,idx));host.appendChild(card);
+    });
+  }
+
+  function openLook(look,index){
+    const o=document.createElement('div');o.className='lookDetailOverlay';
+    o.innerHTML='<div class="lookDetailTop"><button aria-label="Back">←</button><strong>YOUR LOOK</strong><span></span></div>'+
+      '<div class="lookDetailArt">'+(look.image?'<img src="'+look.image+'" alt="">':'')+'</div>'+
+      '<div class="lookDetailInfo"><div class="date">'+niceDate(look.date)+'</div><div class="context">'+
+      [look.context,look.vibe].filter(Boolean).join(' · ')+'</div></div>'+
+      '<div class="lookDetailActions"><button data-act="restyle">RESTYLE</button>'+
+      (look.kind==='saved'?'<button data-act="wear" class="primary">WEAR THIS</button>':'<button data-act="wear" class="primary">WEAR AGAIN</button>')+
+      '<button data-act="remove">REMOVE</button></div>';
+    o.querySelector('.lookDetailTop button').onclick=()=>o.remove();
+    o.querySelector('[data-act="remove"]').onclick=()=>{
+      const key=look.kind==='worn'?WORN_KEY:SAVED_KEY, arr=read(key);
+      if(Array.isArray(arr)){arr.splice(index,1);write(key,arr)} o.remove();render(look.kind);
+    };
+    o.querySelector('[data-act="wear"]').onclick=()=>{
+      if(look.kind==='saved'){
+        const worn=read(WORN_KEY); worn.unshift({...look.raw,wornAt:new Date().toISOString()});write(WORN_KEY,worn);
+      }
+      o.remove();document.querySelector('[data-page="looks"]')?.click();
+    };
+    o.querySelector('[data-act="restyle"]').onclick=()=>{
+      o.remove();
+      document.querySelector('[data-page="home"]')?.click();
+    };
+    document.body.appendChild(o);
+  }
+
+  document.querySelectorAll('.looksTab').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.looksTab').forEach(x=>x.classList.toggle('active',x===btn));
+    render(btn.dataset.lookTab);
+  }));
+
+  // HOME now opens the Style planner; LOOKS is the archive.
+  document.addEventListener('click',e=>{
+    const home=e.target.closest('.nav[data-page="home"]');
+    if(home){
+      setTimeout(()=>{
+        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+        document.getElementById('style')?.classList.add('active');
+        document.querySelectorAll('.bottom .nav').forEach(n=>n.classList.remove('active'));
+        home.classList.add('active');
+      },0);
+    }
+    const looks=e.target.closest('.nav[data-page="looks"]');
+    if(looks)setTimeout(()=>render(document.querySelector('.looksTab.active')?.dataset.lookTab||'worn'),0);
+  },true);
+
+  render('worn');
+})();
+</script>
 </body></html>
