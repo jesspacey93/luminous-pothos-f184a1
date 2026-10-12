@@ -1,17 +1,18 @@
-DAILY DROBE V8.4 — BRAND / SPLASH / APP ICON
+DAILY DROBE V8.5 — SPLASH FIX
 
-Drop these files/folders into the ROOT of your existing Daily Drobe GitHub repo and replace when prompted:
-
+Drop into the ROOT of the existing repo and replace:
 - index.html
 - manifest.webmanifest
 - icons/
 
-Do NOT delete your existing assets/ or netlify/ folders. This package is intentionally a drop-in update so your existing wardrobe assets, Netlify functions, SerpApi/OpenAI setup and catalogue remain in place.
+Keep the existing assets/ and netlify/ folders.
 
-Included:
-- Approved black/white DD lock-up splash
-- Long premium logo hold
-- Seamless full-screen black 'wardrobe doors' opening onto the existing white app
-- 5.2 second total ident with weighted easing
-- New approved Daily Drobe app icon at 180, 192, 512 and 1024 px
-- PWA manifest updated to black launch/theme colour
+Fixes:
+- Correct initial destination is the existing STYLE page: “What are you doing today?”
+- Removed the independent white centre-line animation.
+- Removed the end opacity/cut transition.
+- The real Style page exists underneath the splash for the entire animation.
+- The two black screen halves continuously slide away to expose that live page.
+- Each half of the DD travels outward with its black door.
+- Longer static logo hold before movement.
+- Approved app icon retained.
