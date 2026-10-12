@@ -1055,4 +1055,247 @@ const _v82RenderTrip=renderTrip;
 renderTrip=function(){_v82RenderTrip();let tabs=document.querySelectorAll('.packTab');if(tabs[0])tabs[0].textContent='Wardrobe';if(tabs[2])tabs[2].textContent='Pack'};
 </script>
 
+
+<style id="v83-pack-refinement">
+/* V8.3 — simpler stop planning */
+.packWizard{max-width:390px}
+.stopPlanSummary{border-bottom:1px solid #e7e7e7;padding:14px 2px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.stopPlanSummary b{display:block;font-size:12px;font-weight:500}
+.stopPlanSummary small{display:block;font-size:8px;color:#777;margin-top:4px}
+.stopPlanSummary button{border:0;background:#fff;font:inherit;font-size:8px;letter-spacing:.12em;text-transform:uppercase}
+.stopPlannerDivider{height:1px;background:#e7e7e7;margin:28px 0 22px}
+.stopPlannerActions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:26px}
+.stopPlannerActions .secondary,.stopPlannerActions .primary{width:100%}
+.travelRuleNote{font-size:8px;color:#777;line-height:1.5;text-align:center;margin:18px auto 0;max-width:310px}
+</style>
+<script id="v83-pack-refinement-js">
+/* V8.3: Trip → Stops (all stop details + outfit counts together) → Packing → Baggage → Review */
+packWizardStep=1;
+packStopCursor=0;
+
+function wizardGo(n){
+  packWizardStep=Math.max(1,Math.min(5,n));
+  renderPackForm();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function wizardBack(){
+  wizardGo(packWizardStep-1);
+}
+function wizardHead(title,sub=''){
+  return `<div class="wizardTop"><button class="wizardBack" onclick="wizardBack()">←</button><div class="wizardProgress">${packWizardStep} / 5</div><span></span></div><h1 class="wizardTitle">${title}</h1>${sub?`<p class="wizardSub">${sub}</p>`:'<div style="height:14px"></div>'}`;
+}
+function wizardNext(label='NEXT →',fn=`wizardGo(${packWizardStep+1})`){
+  return `<button class="primary wide wizardNext" onclick="${fn}">${label}</button>`;
+}
+function wizardTrip(){
+  return `${wizardHead('Your trip')}<div class="wizardBody wizardFields"><label class="packLabel">Trip name</label><input class="packInput" placeholder="USA Road Trip" value="${esc(packDraft.name)}" oninput="packDraft.name=this.value"><div class="packTwo"><div><label class="packLabel">From</label><input class="packInput" type="date" value="${packDraft.start}" onchange="packDraft.start=this.value"></div><div><label class="packLabel">To</label><input class="packInput" type="date" value="${packDraft.end}" onchange="packDraft.end=this.value"></div></div></div>${wizardNext('NEXT →',`if(!packDraft.name.trim()){toastMsg('Give your trip a name first')}else{if(!packDraft.stops.length)packDraft.stops.push(blankStop());packStopCursor=0;wizardGo(2)}`)}`;
+}
+function addStopAndEdit(){
+  packDraft.stops.push(blankStop());
+  packStopCursor=packDraft.stops.length-1;
+  renderPackForm();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function editWizardStop(i){packStopCursor=i;renderPackForm();window.scrollTo({top:0,behavior:'smooth'})}
+function removeWizardStop(i){
+  packDraft.stops.splice(i,1);
+  if(!packDraft.stops.length)packDraft.stops.push(blankStop());
+  packStopCursor=Math.min(packStopCursor,packDraft.stops.length-1);
+  renderPackForm();
+}
+function addSpecialPlanInline(id){
+  let s=packDraft.stops.find(x=>x.id===id),name=prompt('What is the special plan? e.g. Halloween night');
+  if(!name)return;
+  let vibe=prompt('Vibe? Effortless, Polished, Cool or Sexy',s.vibe)||s.vibe;
+  let note=prompt('Anything the outfit needs to know?','')||'';
+  s.specials.push({name,vibe,note});
+  renderPackForm();
+}
+function removeSpecialInline(id,i){
+  let s=packDraft.stops.find(x=>x.id===id);s.specials.splice(i,1);renderPackForm();
+}
+function changeNeedInline(id,k,n){
+  let s=packDraft.stops.find(x=>x.id===id);s.needs[k]=Math.max(0,(s.needs[k]||0)+n);renderPackForm();
+}
+function inlineCounterHTML(s,k){
+  return `<div class="counterRow"><span>${k}</span><div class="counter"><button onclick="changeNeedInline('${s.id}','${k}',-1)">−</button><b>${s.needs[k]||0}</b><button onclick="changeNeedInline('${s.id}','${k}',1)">+</button></div></div>`;
+}
+function wizardStopsCombined(){
+  let s=packDraft.stops[packStopCursor]||packDraft.stops[0];
+  if(!s){packDraft.stops.push(blankStop());s=packDraft.stops[0];packStopCursor=0}
+  let summaries=packDraft.stops.map((x,i)=>i===packStopCursor?'':`<div class="stopPlanSummary"><span><b>${esc(x.place||`Stop ${i+1}`)}</b><small>${x.temperature}°C · ${esc(x.vibe)} · ${packOutfitCount(x)} outfits</small></span><button onclick="editWizardStop(${i})">Edit</button></div>`).join('');
+  return `${wizardHead('Plan your stops','Add the place, weather, vibe and every outfit you need there — all in one go.')}
+  ${summaries}
+  <div class="wizardBody wizardFields">
+    <label class="packLabel">Where?</label>
+    <input class="packInput" value="${esc(s.place)}" placeholder="Memphis" oninput="updateStop('${s.id}','place',this.value)">
+    <div class="packTwo"><div><label class="packLabel">From</label><input class="packInput" type="date" value="${s.start}" onchange="updateStop('${s.id}','start',this.value)"></div><div><label class="packLabel">To</label><input class="packInput" type="date" value="${s.end}" onchange="updateStop('${s.id}','end',this.value)"></div></div>
+    <label class="packLabel">Temperature</label>
+    <div class="packTemp"><button onclick="changeWizardTemp('${s.id}',-1)">−</button><strong>${s.temperature}°C</strong><button onclick="changeWizardTemp('${s.id}',1)">+</button></div>
+    <label class="packLabel">Conditions</label>
+    <div class="wizardConditions">${['Sunny','Cloudy','Raining','Snow'].map(x=>`<button class="packChoice ${(s.conditions||[]).includes(x)?'sel':''}" onclick="toggleWizardCondition('${s.id}','${x}')">${x}</button>`).join('')}</div>
+    <label class="packLabel">Vibe</label>
+    <div class="wizardVibes">${PACK_VIBES.map(x=>`<button class="packChoice ${s.vibe===x?'sel':''}" onclick="updateStop('${s.id}','vibe','${x}');renderPackForm()">${x}</button>`).join('')}</div>
+    <div class="stopPlannerDivider"></div>
+    <label class="packLabel">How many outfits?</label>
+    <div class="wizardCounterRows">${OUTFIT_MOMENTS.map(x=>inlineCounterHTML(s,x)).join('')}</div>
+    <div class="wizardSpecial">
+      <button class="wizardAdd" onclick="addSpecialPlanInline('${s.id}')">+ ADD A SPECIAL PLAN</button>
+      ${(s.specials||[]).map((sp,i)=>`<div class="specialPlan"><span><b>${esc(sp.name)}</b><small>${esc(sp.vibe||s.vibe)}${sp.note?' · '+esc(sp.note):''}</small></span><button class="stopEdit" onclick="removeSpecialInline('${s.id}',${i})">Remove</button></div>`).join('')}
+    </div>
+    <div class="stopPlannerActions">
+      <button class="secondary" onclick="addStopAndEdit()">+ SAVE & ADD ANOTHER STOP</button>
+      ${packDraft.stops.length>1?`<button class="linkbtn" onclick="removeWizardStop(${packStopCursor})">REMOVE THIS STOP</button>`:''}
+    </div>
+  </div>
+  ${wizardNext('NEXT →',`if(packDraft.stops.some(x=>!x.place.trim())){toastMsg('Add a destination for every stop')}else if(packDraft.stops.some(x=>packOutfitCount(x)<1)){toastMsg('Add at least one outfit for every stop')}else wizardGo(3)`)}`;
+}
+function wizardPacking(){
+  let opts=[['Light','PACK LIGHT','Keep it tight, while still respecting the two-wear clothing limit.'],['Smart','PACK SMART','More variety, sensible repeats, and plenty of one-wear pieces.'],['Freely','PACK FREELY','Prioritise the outfits you love. One-wear pieces are completely fine.']];
+  return `${wizardHead('How do you want to pack?')}<div class="wizardBody">${opts.map(x=>`<button class="wizardChoice ${packDraft.packingStyle===x[0]?'sel':''}" onclick="packDraft.packingStyle='${x[0]}';renderPackForm()"><b>${x[1]}</b><small>${x[2]}</small></button>`).join('')}<p class="travelRuleNote">Clothing is never planned for more than two wears. Shoes, bags and accessories can repeat more often.</p></div>${wizardNext()}`;
+}
+function wizardBaggage(){
+  let b=packDraft.baggage;
+  return `${wizardHead('Your baggage','Choose what you’re actually travelling with.')}<div class="wizardBody"><button class="wizardChoice ${b.mode==='personal'?'sel':''}" onclick="setWizardBaggage('personal')"><b>HAND LUGGAGE ONLY</b><small>Personal item / small under-seat bag</small></button><button class="wizardChoice ${b.mode==='cabin'?'sel':''}" onclick="setWizardBaggage('cabin')"><b>HAND LUGGAGE + CABIN BAG</b><small>Personal item plus cabin suitcase</small></button><button class="wizardChoice ${b.mode==='checked'?'sel':''}" onclick="setWizardBaggage('checked')"><b>HAND LUGGAGE + CHECKED SUITCASE</b><small>Personal item plus hold luggage</small></button><div class="allowanceGrid">${b.mode==='personal'?allowanceInput('Personal bag','personalKg'):b.mode==='cabin'?allowanceInput('Personal bag','personalKg')+allowanceInput('Cabin bag','cabinKg'):allowanceInput('Hand luggage','personalKg')+allowanceInput('Checked case','checkedKg')}</div></div>${wizardNext()}`;
+}
+function wizardReview(){
+  let outfits=packDraft.stops.reduce((a,s)=>a+packOutfitCount(s),0),bag=packDraft.baggage.mode==='personal'?'Hand luggage only':packDraft.baggage.mode==='cabin'?'Hand luggage + cabin bag':'Hand luggage + checked suitcase';
+  return `${wizardHead('Review your trip')}<div class="wizardBody"><div class="reviewRows"><div class="reviewRow"><span>Trip</span><b>${esc(packDraft.name)}</b></div><div class="reviewRow"><span>Stops</span><b>${packDraft.stops.length}</b></div><div class="reviewRow"><span>Outfits</span><b>${outfits}</b></div><div class="reviewRow"><span>Packing</span><b>Pack ${esc(packDraft.packingStyle)}</b></div><div class="reviewRow"><span>Baggage</span><b>${bag}</b></div><div class="reviewRow"><span>Allowance</span><b>${totalAllowance(packDraft.baggage).toFixed(0)} kg total</b></div></div><div class="reviewStops">${packDraft.stops.map(s=>`<div class="reviewStop"><b>${esc(s.place)}</b><small>${s.temperature}°C · ${esc(s.vibe)} · ${packOutfitCount(s)} outfits</small></div>`).join('')}</div><p class="travelRuleNote">Clothing max: 2 wears per trip. Travel looks prioritise comfort — leggings, joggers, soft layers and trainers where your Drobe allows.</p></div>${wizardNext('BUILD MY PACK →','buildTrip()')}`;
+}
+renderPackForm=function(){
+  const root=document.getElementById('packRoot');if(!root)return;
+  let body=packWizardStep===1?wizardTrip():packWizardStep===2?wizardStopsCombined():packWizardStep===3?wizardPacking():packWizardStep===4?wizardBaggage():wizardReview();
+  root.innerHTML=`<div class="packWizard">${body}</div>`;
+};
+
+/* ---------- smarter trip outfit engine ---------- */
+function isClothingForWearLimit(i){
+  return i && ['Top','Bottom','Dress','One-piece','Outerwear'].includes(i.cat);
+}
+function isTravelActivity(activity){
+  return /travel|flight|airport|drive|driving|train|journey/.test(String(activity||'').toLowerCase());
+}
+function travelComfortScore(i){
+  let t=packText(i),s=0;
+  if(i.cat==='Bottom'){
+    if(/legging/.test(t))s+=18;
+    if(/jogger|track|sweat|soft trouser/.test(t))s+=15;
+    if(/wide.?leg|relaxed/.test(t))s+=5;
+    if(/jean|denim/.test(t))s-=4;
+    if(/short/.test(t))s-=2;
+  }
+  if(i.cat==='Top'){
+    if(/sweatshirt|hoodie/.test(t))s+=16;
+    if(/t.?shirt|tee|tank/.test(t))s+=10;
+    if(/cardigan|soft|knit|jumper/.test(t))s+=7;
+    if(/blouse|halter|lace/.test(t))s-=8;
+  }
+  if(i.cat==='Outerwear'){
+    if(/bomber|utility|jacket|cardigan|trench/.test(t))s+=7;
+    if(/fur/.test(t))s-=3;
+  }
+  if(i.cat==='Shoes'){
+    if(/trainer|gazelle|samba|adidas/.test(t))s+=20;
+    if(/loafer|flat|ballet/.test(t))s+=2;
+    if(/heel|slingback|kitten/.test(t))s-=30;
+  }
+  if(i.cat==='Bag'){
+    if(/tote|crossbody|bucket/.test(t))s+=7;
+    if(/clutch|mini/.test(t))s-=5;
+  }
+  return s;
+}
+function tripItemScore(i,moment,usage){
+  let base=packScore(i,{temperature:moment.temperature,conditions:moment.conditions||[],activities:[moment.activity]});
+  let u=usage[i.id]||0;
+  if(isClothingForWearLimit(i)){
+    if(u>=2)return -9999;
+    /* Prefer fresh clothing. A second wear is allowed, not the goal. */
+    base += u===0 ? 7 : -5;
+  }else{
+    /* Repeating shoes/bags/accessories is useful and realistic. */
+    base += u>0 ? 2 : 0;
+  }
+  if(isTravelActivity(moment.activity))base+=travelComfortScore(i);
+  return base;
+}
+function chooseTripItem(cat,moment,usage,usedInLook,filter=()=>true){
+  let candidates=items.filter(i=>i.cat===cat&&!usedInLook.has(i.id)&&filter(i));
+  candidates.sort((a,b)=>tripItemScore(b,moment,usage)-tripItemScore(a,moment,usage));
+  return candidates[0]&&tripItemScore(candidates[0],moment,usage)>-9000?candidates[0]:null;
+}
+function buildSmartTripLook(moment,usage,seed=0){
+  let used=new Set(),pcs=[],travel=isTravelActivity(moment.activity);
+  let evening=/dinner|drinks|night|event|date|party|halloween/.test(String(moment.activity).toLowerCase());
+  let add=i=>{if(i){pcs.push(i);used.add(i.id);usage[i.id]=(usage[i.id]||0)+1}};
+  if(!travel && evening && seed%2===0){
+    let dress=chooseTripItem('Dress',moment,usage,used);
+    if(dress)add(dress);
+  }
+  if(!pcs.some(i=>i.cat==='Dress'||i.cat==='One-piece')){
+    let top=chooseTripItem('Top',moment,usage,used,i=>travel ? !/halter|lace/.test(packText(i)) : true);
+    let bottom=chooseTripItem('Bottom',moment,usage,used,i=>{
+      if(!travel)return true;
+      let t=packText(i);
+      return /legging|jogger|track|sweat|trouser|jean|denim/.test(t);
+    });
+    add(top);add(bottom);
+  }
+  if(moment.temperature<18){
+    let outer=chooseTripItem('Outerwear',moment,usage,used,i=>travel ? !/fur/.test(packText(i)) : true);
+    add(outer);
+  }
+  let shoe=chooseTripItem('Shoes',moment,usage,used,i=>{
+    let t=packText(i);
+    if(travel)return /trainer|gazelle|samba|adidas|loafer|flat/.test(t)&&!/heel|slingback|kitten/.test(t);
+    return evening||!/heel/.test(t);
+  });
+  add(shoe);
+  add(chooseTripItem('Bag',moment,usage,used));
+  add(chooseTripItem('Accessory',moment,usage,used));
+  add(chooseTripItem('Fragrance',moment,usage,used));
+  return pcs.map(i=>i.id);
+}
+buildTrip=function(){
+  if(!packDraft.name.trim()){toastMsg('Give your trip a name first');return}
+  if(!packDraft.stops.length){toastMsg('Add at least one stop');return}
+  if(packDraft.stops.some(s=>!s.place.trim())){toastMsg('Add a place for every stop');return}
+  let d=JSON.parse(JSON.stringify(packDraft));
+  let trip={id:'trip_'+Date.now(),...d,days:packDays(d),capsule:[],looks:[],packed:[],mustPack:[],created:Date.now(),wearLimit:2};
+  let moments=[];
+  d.stops.forEach((s,si)=>{
+    Object.entries(s.needs||{}).forEach(([act,n])=>{
+      for(let j=0;j<n;j++)moments.push({stopId:s.id,stopIndex:si,place:s.place,activity:act,temperature:s.temperature,conditions:s.conditions,vibe:s.vibe,special:false});
+    });
+    (s.specials||[]).forEach(sp=>moments.push({stopId:s.id,stopIndex:si,place:s.place,activity:sp.name,temperature:s.temperature,conditions:s.conditions,vibe:sp.vibe||s.vibe,note:sp.note||'',special:true}));
+  });
+  if(!moments.length){toastMsg('Add at least one outfit to a stop');return}
+  /* Put travel looks early so comfortable travel pieces are allocated deliberately. */
+  moments.sort((a,b)=>(isTravelActivity(b.activity)?1:0)-(isTravelActivity(a.activity)?1:0));
+  let usage={};
+  moments.forEach((m,ix)=>{
+    let ids=buildSmartTripLook(m,usage,ix);
+    trip.looks.push({...m,index:ix,ids,mustPack:m.special});
+    ids.forEach(id=>{if(!trip.capsule.includes(id))trip.capsule.push(id)});
+  });
+  activeTrip=trip;
+  packTrips.push(trip);
+  savePackTrips();
+  packView='capsule';
+  renderTrip();
+};
+
+/* Restyling also respects the two-wear clothing rule across the rest of the trip. */
+restylePackLook=function(idx){
+  let l=activeTrip.looks[idx],usage={};
+  activeTrip.looks.forEach((look,i)=>{
+    if(i===idx)return;
+    look.ids.forEach(id=>usage[id]=(usage[id]||0)+1);
+  });
+  l.ids=buildSmartTripLook(l,usage,Date.now()%11);
+  l.ids.forEach(id=>{if(!activeTrip.capsule.includes(id))activeTrip.capsule.push(id)});
+  savePackTrips();renderTrip();
+};
+</script>
+
 </body></html>
