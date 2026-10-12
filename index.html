@@ -155,6 +155,35 @@ body{background:var(--paper);color:var(--ink)}
 .stylePlanner .moodBtn.active{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}
 .wardrobeCard,.shopCard,.packCard{box-shadow:none!important}
 .looksPage{background:#fff}
+
+/* V8.8 — CINEMATIC FOCUS PULL
+   The live landing page remains fully defocused behind the black doors.
+   Focus begins only once the doors have completely cleared. */
+body.splashRunning .app,
+body.splashRunning .bottom{
+  transform:scale(1.035)!important;
+  filter:blur(22px)!important;
+  opacity:.72;
+  animation:none!important;
+  will-change:filter,transform,opacity;
+}
+body.focusPull .app,
+body.focusPull .bottom{
+  animation:ddFocusPull 1.35s cubic-bezier(.22,.61,.36,1) forwards!important;
+}
+@keyframes ddFocusPull{
+  0%{transform:scale(1.035);filter:blur(22px);opacity:.72}
+  22%{transform:scale(1.026);filter:blur(18px);opacity:.78}
+  55%{transform:scale(1.012);filter:blur(8px);opacity:.9}
+  82%{transform:scale(1.003);filter:blur(2px);opacity:.98}
+  100%{transform:scale(1);filter:blur(0);opacity:1}
+}
+@media (prefers-reduced-motion:reduce){
+  body.splashRunning .app,body.splashRunning .bottom,
+  body.focusPull .app,body.focusPull .bottom{
+    animation:none!important;transform:none!important;filter:none!important;opacity:1!important
+  }
+}
 </style><style id="v75-three-looks">
 .resultMinimalHead{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;margin:0 0 18px;font-size:8px;letter-spacing:.2em;text-align:center}.resultMinimalHead .iconbtn{text-align:left}.resultMinimalHead span:last-child{text-align:right;color:#777;letter-spacing:.08em}.lookRail{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -22px 20px;padding:0 22px 8px;scrollbar-width:none}.lookRail::-webkit-scrollbar{display:none}.lookPreview{flex:0 0 44%;scroll-snap-align:center;border:1px solid #e5e5e5;background:#fff;padding:0;position:relative}.lookPreview.active{border-color:#111}.lookPreview>span{position:absolute;z-index:20;top:8px;left:8px;font-size:8px;letter-spacing:.12em}.lookPreview .pinterestOutfit{min-height:210px!important;height:210px!important;margin:0!important;transform:scale(.96)}.activeLookLabel{text-align:center;text-transform:uppercase;font-size:9px;letter-spacing:.18em;margin:8px 0 0}.lookDots{display:flex;justify-content:center;gap:7px;margin:2px 0 20px}.lookDots button{width:5px;height:5px;border:0;border-radius:50%;background:#ccc;padding:0}.lookDots button.on{background:#111}.resultContext{text-align:center;font-size:10px;letter-spacing:.08em;margin:4px 0 24px;color:#555}.whyMinimal{border-top:1px solid #ddd;border-bottom:1px solid #ddd;padding:15px 0;margin:0}.whyMinimal summary{list-style:none;display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;cursor:pointer}.whyMinimal summary::-webkit-details-marker{display:none}.whyMinimal p,.whyMinimal li{font-size:12px;line-height:1.55;color:#555}.whyMinimal ul{padding-left:17px;margin-bottom:4px}.resultLinks{display:flex;justify-content:space-between;padding:18px 0 2px}.resultLinks button,.notFeeling{border:0;background:none;font:600 9px "Gill Sans","Gill Sans MT",Arial,sans-serif;letter-spacing:.14em;padding:8px 0}.wearBtn{margin-top:14px!important}.notFeeling{width:100%;color:#777;margin-top:8px}.brainSignals,.brainWhy,.stylingTips,.trendBadge,.lookPieceCount,.brainFeedback{display:none!important}.modal .pinterestOutfit{background:#fff!important;border:0!important;box-shadow:none!important}
 
@@ -1021,9 +1050,16 @@ function showColourPrototype(){let has=document.getElementById('colourSelfie').f
 (function(){
   const splash=document.getElementById('ddSplash');
   if(!splash)return;
-  const finish=()=>{splash.remove();document.body.classList.remove('splashRunning');};
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
-  setTimeout(finish,5650);
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    splash.remove();document.body.classList.remove('splashRunning');return;
+  }
+  // The doors finish first. Only then does the revealed page pull into focus.
+  setTimeout(()=>{
+    splash.remove();
+    document.body.classList.remove('splashRunning');
+    document.body.classList.add('focusPull');
+    setTimeout(()=>document.body.classList.remove('focusPull'),1400);
+  },5650);
 })();
 </script>
 

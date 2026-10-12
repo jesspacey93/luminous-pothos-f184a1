@@ -1,20 +1,13 @@
-DAILY DROBE V8.7 — REFINED MINIMAL + LOOKS NAV FIX
+DAILY DROBE V8.8 — CINEMATIC FOCUS PULL
 
-Replace these in the root of the existing repo:
-- index.html
-- manifest.webmanifest
-- icons/
+Built on V8.7, so it retains:
+- Correct HOME · DROBE · LOOKS · PACK · SHOP navigation
+- LOOKS WORN / SAVED archive
+- Refined Minimal styling direction
+- Approved DD icon and seamless black-door splash
 
-Keep assets/ and netlify/ intact.
-
-Fix:
-The V8.6 button had data-page="looks" but still contained onclick="go('style')" and the visible label remained Style. This is now corrected to LOOKS -> go('looks').
-
-Navigation:
-HOME · DROBE · LOOKS · PACK · SHOP
-
-HOME remains the “What are you doing today?” styling entry point.
-LOOKS opens the WORN / SAVED archive.
-
-Also begins the approved Refined Minimal visual direction:
-white/black foundation, warm ivory selected states, finer rules, no shadows, square geometry, quieter bottom navigation.
+New:
+- Landing page is heavily defocused (22px blur) while the black doors open.
+- No focus change happens during the door movement.
+- Once the doors have fully cleared, the splash is removed and the live “What are you doing today?” page smoothly pulls into focus over 1.35 seconds.
+- Subtle scale reduction accompanies the focus pull for a lens-like, premium finish.
